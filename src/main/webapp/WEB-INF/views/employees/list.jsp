@@ -7,10 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h1>Home</h1>
-	<a href="/department/list">부서목록</a>
-	<a href="/location/list">로케이션목록</a>
-
 
 </body>
 </html>
