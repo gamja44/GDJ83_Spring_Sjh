@@ -55,4 +55,93 @@ public class DepartmentDAO {
 
 		return ar;
 	}
+
+	// detail
+
+	public DepartmentDTO getDetail(int num) throws Exception {
+		Connection con = dbConnection.getConnection();
+		String sql = "SELECT * FROM DEPARTMENTS WHERE DEPARTMENT_ID =?";
+		PreparedStatement st = con.prepareStatement(sql);
+
+		// ?세팅
+		st.setInt(1, num); // sql 인젝션 방지하기위함
+
+		ResultSet rs = st.executeQuery();
+		DepartmentDTO departmentDTO = null;
+		if (rs.next()) {
+			departmentDTO = new DepartmentDTO();
+			departmentDTO.setDepartment_id(rs.getInt(1));
+			departmentDTO.setLocation_id(rs.getInt(4));
+			departmentDTO.setDepartment_name(rs.getString(2));
+			departmentDTO.setManager_id(rs.getLong(3));
+		}
+
+		rs.close();
+		st.close();
+		con.close();
+
+		return departmentDTO;
+
+	}
+
+	public int add(DepartmentDTO departmentDTO) throws Exception {
+		// 1.db연결
+		Connection con = dbConnection.getConnection();
+
+		// 2.sql생성
+		String sql = "INSERT INTO DEPARTMENTS" + " (DEPARTMENT_ID, DEPARTMENT_NAME, MANAGER_ID, LOCATION_ID)"
+				+ " values (DEPARTMENTS_SEQ.NEXTVAL, ?, ?, ?)";
+
+		// 3.미리전송
+		PreparedStatement st = con.prepareStatement(sql);
+
+		// 4.세팅
+		st.setString(1, departmentDTO.getDepartment_name());
+		st.setLong(2, departmentDTO.getManager_id());
+		st.setInt(3, departmentDTO.getLocation_id());
+
+		// 5.최종전송및 결과전송
+		int result = st.executeUpdate(); //
+
+		// 6.자원 해제
+		st.close();
+		con.close();
+
+		return result;
+
+	}
+
+	public int delete(DepartmentDTO departmentDTO) throws Exception {
+		Connection con = dbConnection.getConnection();
+		String sql = "DELETE DEPARTMENTS WHERE DEPARTMENT_ID =?";
+		PreparedStatement st = con.prepareStatement(sql);
+
+		st.setInt(1, departmentDTO.getDepartment_id());
+		int result = st.executeUpdate();
+
+		st.close();
+		con.close();
+
+		return result;
+	}
+
+	public int update(DepartmentDTO departmentDTO) throws Exception {
+		int result = 0;
+		Connection con = dbConnection.getConnection();
+		String sql = "UPDATE DEPARTMENTS SET DEPARTMENT_NAME=?, MANAGER_ID=?, LOCATION_ID=?" + " WHERE DEPARTMENT_ID=?";
+		PreparedStatement st = con.prepareStatement(sql);
+
+		st.setString(1, departmentDTO.getDepartment_name());
+		st.setLong(2, departmentDTO.getManager_id());
+		st.setInt(3, departmentDTO.getLocation_id());
+		st.setInt(4, departmentDTO.getDepartment_id());
+
+		result = st.executeUpdate();
+
+		st.close();
+		con.close();
+
+		return result;
+	}
+
 }

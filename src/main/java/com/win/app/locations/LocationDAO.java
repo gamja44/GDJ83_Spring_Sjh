@@ -32,10 +32,7 @@ public class LocationDAO {
 		while (rs.next()) {// 결과 집합에서 데이터를 추출
 			LocationDTO locationDTO = new LocationDTO();// LocationDTO 객체 생성
 			locationDTO.setLocation_id(rs.getInt("LOCATION_ID")); // location_id 설정
-			locationDTO.setStreet_address(rs.getString("STREET_ADDRESS"));// street_address 설정
-			locationDTO.setPostal_code(rs.getString("POSTAL_CODE"));
 			locationDTO.setCity(rs.getString("CITY"));
-			locationDTO.setState_province(rs.getString("STATE_PROVINCE"));
 			locationDTO.setCountry_id(rs.getString("COUNTRY_ID"));
 			ar.add(locationDTO); // 리스트에 locationDTO 추가
 
@@ -46,4 +43,80 @@ public class LocationDAO {
 		return ar; // 조회된 리스트 반환
 	}
 
+	public LocationDTO getDetail(int num) throws Exception {
+		Connection con = dbConnection.getConnection();
+		String sql = "SELECT * FROM LOCATIONS WHERE LOCATION_ID=?";
+		PreparedStatement st = con.prepareStatement(sql);
+		st.setInt(1, num);
+		ResultSet rs = st.executeQuery();
+		LocationDTO locationDTO = null;
+
+		if (rs.next()) {
+			locationDTO = new LocationDTO();
+			locationDTO.setLocation_id(rs.getInt(1));
+			locationDTO.setStreet_address(rs.getString(2));
+			locationDTO.setPostal_code(rs.getString(3));
+			locationDTO.setCity(rs.getString(4));
+			locationDTO.setState_province(rs.getString(5));
+			locationDTO.setCountry_id(rs.getString(6));
+		}
+		rs.close();
+		st.close();
+		con.close();
+
+		return locationDTO;
+
+	}
+
+	public int add(LocationDTO locationDTO) throws Exception {
+		Connection con = dbConnection.getConnection();
+		String sql = "INSERT INTO LOCATIONS (LOCATION_ID, STREET_ADDRESS, POSTAL_CODE, CITY, STATE_PROVINCE, COUNTRY_ID)"
+				+ "values (LOCATIONS_SEQ.NEXTVAL, ?, ?, ?, ?, ?)";
+
+		PreparedStatement st = con.prepareStatement(sql);
+
+		st.setString(1, locationDTO.getStreet_address());
+		st.setString(2, locationDTO.getPostal_code());
+		st.setString(3, locationDTO.getCity());
+		st.setString(4, locationDTO.getState_province());
+		st.setString(5, locationDTO.getCountry_id());
+
+		int result = st.executeUpdate();
+
+		st.close();
+		con.close();
+
+		return result;
+
+	}
+
+	public int delete(LocationDTO locationDTO) throws Exception {
+		Connection con = dbConnection.getConnection();
+		String sql = "DELETE FROM LOCATIONS WHERE LOCATION_ID = ?";
+		PreparedStatement st = con.prepareStatement(sql);
+		st.setInt(1, locationDTO.getLocation_id());
+		int result = st.executeUpdate();
+		st.close();
+		con.close();
+
+		return result;
+	}
+
+	public int update(LocationDTO locationDTO) throws Exception {
+		Connection con = dbConnection.getConnection();
+		String sql = "UPDATE LOCATIONS SET STREET_ADDRESS = ?, POSTAL_CODE = ?, CITY = ?, STATE_PROVINCE = ?, COUNTRY_ID = ? WHERE LOCATION_ID = ?";
+		PreparedStatement st = con.prepareStatement(sql);
+		st.setString(1, locationDTO.getStreet_address());
+		st.setString(2, locationDTO.getPostal_code());
+		st.setString(3, locationDTO.getCity());
+		st.setString(4, locationDTO.getState_province());
+		st.setString(5, locationDTO.getCountry_id());
+		st.setInt(6, locationDTO.getLocation_id());
+		int result = st.executeUpdate();
+		st.close();
+		con.close();
+
+		return result;
+
+	}
 }
