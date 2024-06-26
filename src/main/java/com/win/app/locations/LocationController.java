@@ -46,7 +46,7 @@ public class LocationController {
 
 	}
 
-	@RequestMapping(value = "delete", method = RequestMethod.POST)
+	@RequestMapping("delete")
 	public String delete(LocationDTO locationDTO, Model model) throws Exception {
 		int result = locationService.delete(locationDTO);
 		String url = "";

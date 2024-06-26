@@ -20,28 +20,19 @@
                     <th>도시</th>
                     <th>주/도</th>
                     <th>국가 ID</th>
-                    <th>삭제</th>
-                    <th>수정</th>
+                    
                 </tr>
             </thead>
             <tbody>
                 <c:forEach items="${list}" var="dto">
                     <tr>
                         <td>${dto.location_id}</td>
-                        <td><a href="detail?location_id=${dto.location_id}">${dto.street_address}</a></td>
+                        <td>${dto.street_address}</td>
                         <td>${dto.postal_code}</td>
-                        <td>${dto.city}</td>
+                        <td><a href="detail?location_id=${dto.location_id}">${dto.city}</a></td>
                         <td>${dto.state_province}</td>
                         <td>${dto.country_id}</td>
-                        <td>
-                            <form action="delete" method="post">
-                                <input type="hidden" name="location_id" value="${dto.location_id}">
-                                <button type="submit" class="btn btn-danger">삭제</button>
-                            </form>
-                        </td>
-                        <td>
-                            <a href="update?location_id=${dto.location_id}" class="btn btn-warning">수정</a>
-                        </td>
+                      
                     </tr>
                 </c:forEach>
             </tbody>
