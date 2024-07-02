@@ -18,21 +18,19 @@
                 <tr>
                     <th>Product ID</th>
                     <th>Product Type</th>
-                    <th>Product Rate</th>
-                    <th>Product Detail</th>
+                  
                 </tr>
             </thead>
             <tbody>
                 <c:forEach var="product" items="${list}">
                     <tr>
                         <td>${product.product_id}</td>
-                        <td>${product.product_type}</td>
-                        <td>${product.product_rate}</td>
-                        <td>${product.product_detail}</td>
+                       <td><a href="${pageContext.request.contextPath}/product/detail?id=${product.product_id}">${product.product_type}</a></td>
                     </tr>
                 </c:forEach>
             </tbody>
         </table>
+        <a href="${pageContext.request.contextPath}/product/add" class="btn btn-primary">Add Product</a>
     </div>
     
     <c:import url="/WEB-INF/views/sample/bootFooter.jsp"></c:import>

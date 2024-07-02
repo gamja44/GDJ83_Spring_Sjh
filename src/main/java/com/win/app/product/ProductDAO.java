@@ -37,4 +37,39 @@ public class ProductDAO {
 
 		return ar;
 	}
+
+	public ProductDTO getDetail(int id) throws Exception {
+		Connection con = dbConnection.getConnection();
+		String sql = "SELECT * FROM PRODUCT WHERE PRODUCT_ID = ?";
+		PreparedStatement st = con.prepareStatement(sql);
+		st.setInt(1, id);
+		ResultSet rs = st.executeQuery();
+		ProductDTO productDTO = null;
+
+		if (rs.next()) {
+			productDTO = new ProductDTO();
+			productDTO.setProduct_id(rs.getInt("PRODUCT_ID"));
+			productDTO.setProduct_type(rs.getString("PRODUCT_TYPE"));
+			productDTO.setProduct_rate(rs.getDouble("PRODUCT_RATE"));
+			productDTO.setProduct_detail(rs.getString("PRODUCT_DETAIL"));
+		}
+		rs.close();
+		st.close();
+		con.close();
+
+		return productDTO;
+	}
+
+	public void addProduct(ProductDTO product) throws Exception {
+		Connection con = dbConnection.getConnection();
+		String sql = "INSERT INTO PRODUCT (PRODUCT_ID, PRODUCT_TYPE, PRODUCT_RATE, PRODUCT_DETAIL) VALUES (PRODUCT_SEQ.NEXTVAL, ?, ?, ?)";
+		PreparedStatement st = con.prepareStatement(sql);
+		st.setString(1, product.getProduct_type());
+		st.setDouble(2, product.getProduct_rate());
+		st.setString(3, product.getProduct_detail());
+		st.executeUpdate();
+		st.close();
+		con.close();
+	}
+
 }
