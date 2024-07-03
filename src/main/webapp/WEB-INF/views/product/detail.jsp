@@ -32,6 +32,11 @@
             </tr>
         </table>
         <a href="${pageContext.request.contextPath}/product/list" class="btn btn-primary">Back to List</a>
+        <a href="${pageContext.request.contextPath}/product/update?product_id=${product.product_id}" class="btn btn-warning">Update</a>
+       <form action="${pageContext.request.contextPath}/product/delete" method="POST" style="display:inline;">
+            <input type="hidden" name="product_id" value="${product.product_id}" />
+            <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this product?');">Delete</button>
+        </form>
     </div>
 
     <c:import url="/WEB-INF/views/sample/bootFooter.jsp"></c:import>

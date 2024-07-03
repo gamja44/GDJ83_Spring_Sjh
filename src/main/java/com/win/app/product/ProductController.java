@@ -24,8 +24,8 @@ public class ProductController {
 	}
 
 	@RequestMapping(value = "detail", method = RequestMethod.GET)
-	public String getDetail(@RequestParam("id") int id, Model model) throws Exception {
-		ProductDTO product = productService.getDetail(id);
+	public String getDetail(ProductDTO productDTO, Model model) throws Exception {
+		ProductDTO product = productService.getDetail(productDTO);
 		model.addAttribute("product", product);
 		return "product/detail";
 	}
@@ -41,4 +41,26 @@ public class ProductController {
 		productService.addProduct(product);
 		return "redirect:/product/list";
 	}
+
+	@RequestMapping(value = "update", method = RequestMethod.GET)
+	public String updateForm(ProductDTO productDTO, Model model) throws Exception {
+		ProductDTO product = productService.getDetail(productDTO);
+		model.addAttribute("product", product);
+		return "product/update";
+	}
+
+	@RequestMapping(value = "update", method = RequestMethod.POST)
+	public String updateProduct(@ModelAttribute("product") ProductDTO product) throws Exception {
+		productService.updateProduct(product);
+		return "redirect:/product/list";
+	}
+
+	@RequestMapping(value = "delete", method = RequestMethod.POST)
+	public String deleteProduct(@RequestParam("product_id") int productId) throws Exception {
+		ProductDTO productDTO = new ProductDTO();
+		productDTO.setProduct_id(productId);
+		productService.deleteProduct(productDTO);
+		return "redirect:/product/list";
+	}
+
 }

@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+   <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
@@ -25,7 +25,7 @@
                 <c:forEach var="product" items="${list}">
                     <tr>
                         <td>${product.product_id}</td>
-                       <td><a href="${pageContext.request.contextPath}/product/detail?id=${product.product_id}">${product.product_type}</a></td>
+                       <td><a href="${pageContext.request.contextPath}/product/detail?product_id=${product.product_id}">${product.product_type}</a></td>
                     </tr>
                 </c:forEach>
             </tbody>
