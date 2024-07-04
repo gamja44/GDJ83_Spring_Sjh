@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-config.dtd">
+  
+  <configuration>
+  <typeAliases>
+  	<typeAlias type="com.win.app.product.ProductDTO" alias="ProductDTO"/>
+  	<typeAlias type="com.win.app.members.MemberDTO" alias="MemberDTO"/>
+  	<typeAlias type="java.util.Map" alias="Map"/>
+  </typeAliases>
+  
+  
+  </configuration>

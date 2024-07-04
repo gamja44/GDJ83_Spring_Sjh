@@ -11,20 +11,20 @@
   
   
   
-  <select id="getDetail" resultType="com.win.app.product.ProductDTO" parameterType="com.win.app.product.ProductDTO">
+  <select id="getDetail" resultType="ProductDTO" parameterType="ProductDTO">
   	SELECT * FROM PRODUCT WHERE PRODUCT_ID = #{product_id}
   </select>
   
-  <insert id="addProduct" parameterType="com.win.app.product.ProductDTO">
+  <insert id="addProduct" parameterType="ProductDTO">
   INSERT INTO PRODUCT (PRODUCT_ID, PRODUCT_TYPE, PRODUCT_RATE, PRODUCT_DETAIL) VALUES (PRODUCT_SEQ.NEXTVAL, #{product_type}, #{product_rate}, #{product_detail})
   </insert>
   
-  <update id="updateProduct" parameterType="com.win.app.product.ProductDTO">
+  <update id="updateProduct" parameterType="ProductDTO">
         UPDATE PRODUCT SET PRODUCT_TYPE = #{product_type}, PRODUCT_RATE = #{product_rate}, PRODUCT_DETAIL = #{product_detail} 
         WHERE PRODUCT_ID = #{product_id}
   </update>
   
-  <delete id="deleteProduct" parameterType="com.win.app.product.ProductDTO">
+  <delete id="deleteProduct" parameterType="ProductDTO">
         DELETE FROM PRODUCT WHERE PRODUCT_ID = #{product_id}
   </delete>
   
