@@ -26,4 +26,8 @@ public class MemberDAO {
 	public int updateMember(MemberDTO memberDTO) throws Exception {
 		return sqlSession.update(NAMESPACE + "updateMember", memberDTO);
 	}
+
+	public int deleteMember(int m_id) throws Exception {
+		return sqlSession.delete(NAMESPACE + "deleteMember", m_id);
+	}
 }

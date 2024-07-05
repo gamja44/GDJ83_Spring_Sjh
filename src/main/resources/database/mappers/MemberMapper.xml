@@ -27,4 +27,9 @@
         WHERE M_ID = #{m_id, jdbcType=INTEGER}
     </update>
     
+    
+    <delete id="deleteMember" parameterType="int">
+    	DELETE FROM MEMBERS WHERE M_ID = #{m_id}       
+    </delete>
+    
 </mapper>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.win.app.accounts.AccountDAO">
+    <insert id="createAccount" parameterType="com.win.app.accounts.AccountDTO">
+        INSERT INTO PRODUCT_INFO (PRODUCT_INFO_ID, PRODUCT_ID, M_ID, JOIN_DATE, ACCOUNT_NUMBER, BALANCE)
+        VALUES (PRODUCT_INFO_SEQ.NEXTVAL, #{product_id}, #{m_id}, #{join_date}, #{account_number}, #{balance})
+    </insert>
+</mapper>

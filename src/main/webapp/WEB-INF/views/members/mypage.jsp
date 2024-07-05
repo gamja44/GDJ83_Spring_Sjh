@@ -20,8 +20,15 @@
         <p>ID: ${member.member_id}</p>
         
         <div>
-        	<a href="/members/update" class="btn btn-secondary">회원수정</a>
+        	<a href="./update" class="btn btn-secondary">회원수정</a>
         </div>
+        
+        <div>
+            <form method="post" action="./delete">
+                <button type="submit" class="btn btn-danger">회원탈퇴</button>
+            </form>
+        </div>
+        
     </div>
 
     <c:import url="/WEB-INF/views/sample/bootFooter.jsp"></c:import>

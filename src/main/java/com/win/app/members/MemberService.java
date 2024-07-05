@@ -33,4 +33,8 @@ public class MemberService {
 	public int updateMember(MemberDTO memberDTO) throws Exception {
 		return memberDAO.updateMember(memberDTO);
 	}
+
+	public int deleteMember(int m_id) throws Exception {
+		return memberDAO.deleteMember(m_id);
+	}
 }

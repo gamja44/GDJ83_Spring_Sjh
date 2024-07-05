@@ -31,12 +31,13 @@
                 <td>${product.product_detail}</td>
             </tr>
         </table>
-        <a href="${pageContext.request.contextPath}/product/list" class="btn btn-primary">Back to List</a>
-        <a href="${pageContext.request.contextPath}/product/update?product_id=${product.product_id}" class="btn btn-warning">Update</a>
-       <form action="${pageContext.request.contextPath}/product/delete" method="POST" style="display:inline;">
+        <a href="/product/list" class="btn btn-primary">Back to List</a>
+        <a href="/product/update?product_id=${product.product_id}" class="btn btn-warning">Update</a>
+        <form action="/product/delete" method="POST" style="display:inline;">
             <input type="hidden" name="product_id" value="${product.product_id}" />
             <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this product?');">Delete</button>
         </form>
+        <a href="/account/add?product_id=${product.product_id}" class="btn btn-success">Create Account</a>
     </div>
 
     <c:import url="/WEB-INF/views/sample/bootFooter.jsp"></c:import>

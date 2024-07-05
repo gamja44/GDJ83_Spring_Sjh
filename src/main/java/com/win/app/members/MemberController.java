@@ -107,4 +107,16 @@ public class MemberController {
 		return "redirect:/members/mypage";
 	}
 
+	@RequestMapping(value = "delete", method = RequestMethod.POST)
+	public String delete(HttpSession session) throws Exception {
+		MemberDTO sessionMember = (MemberDTO) session.getAttribute("member");
+		if (sessionMember != null) {
+			int result = memberService.deleteMember(sessionMember.getM_id());
+			if (result > 0) {
+				session.invalidate();
+				return "redirect:/";
+			}
+		}
+		return "redirect:/members/mypage";
+	}
 }
