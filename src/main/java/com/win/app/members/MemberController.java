@@ -67,17 +67,44 @@ public class MemberController {
 	@RequestMapping(value = "logout", method = RequestMethod.GET)
 	public String logout(HttpSession session) throws Exception {
 		session.invalidate(); // 세션 무효화
+//		session.setAttribute("member", null);
+//		session.removeAttribute("member");
+//		session.removeValue("member");
+//		session.isNew();
 		return "redirect:/";
 	}
 
 	@RequestMapping(value = "mypage", method = RequestMethod.GET)
 	public String mypage(HttpSession session, Model model) throws Exception {
-		MemberDTO memberDTO = (MemberDTO) session.getAttribute("member");
-		if (memberDTO != null) {
+		MemberDTO sessionMember = (MemberDTO) session.getAttribute("member");
+		if (sessionMember != null) {
+			MemberDTO memberDTO = memberService.getMemberById(sessionMember.getM_id());
 			model.addAttribute("member", memberDTO);
-			return "mypage"; // mypage.jsp로 이동
+			return "members/mypage"; // mypage.jsp로 이동
 		} else {
 			return "redirect:/members/login"; // 로그인 페이지로 리다이렉트
 		}
 	}
+
+	@RequestMapping(value = "update", method = RequestMethod.GET)
+	public String update(HttpSession session, Model model) throws Exception {
+		MemberDTO sessionMember = (MemberDTO) session.getAttribute("member");
+		if (sessionMember != null) {
+			MemberDTO memberDTO = memberService.getMemberById(sessionMember.getM_id());
+			model.addAttribute("member", memberDTO);
+			return "members/update";
+		} else {
+			return "redirect:/members/login";
+		}
+	}
+
+	@RequestMapping(value = "update", method = RequestMethod.POST)
+	public String update(MemberDTO memberDTO, HttpSession session) throws Exception {
+		int result = memberService.updateMember(memberDTO);
+		if (result > 0) {
+			session.setAttribute("member", memberDTO);
+		}
+		return "redirect:/members/mypage";
+	}
+
 }

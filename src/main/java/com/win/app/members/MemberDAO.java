@@ -18,4 +18,12 @@ public class MemberDAO {
 	public MemberDTO login(MemberDTO memberDTO) throws Exception {
 		return sqlSession.selectOne(NAMESPACE + "login", memberDTO);
 	}
+
+	public MemberDTO getMemberById(int m_id) throws Exception {
+		return sqlSession.selectOne(NAMESPACE + "getMemberById", m_id);
+	}
+
+	public int updateMember(MemberDTO memberDTO) throws Exception {
+		return sqlSession.update(NAMESPACE + "updateMember", memberDTO);
+	}
 }

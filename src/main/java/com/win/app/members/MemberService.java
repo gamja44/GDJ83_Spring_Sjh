@@ -25,4 +25,12 @@ public class MemberService {
 		}
 		return result;
 	}
+
+	public MemberDTO getMemberById(int m_id) throws Exception {
+		return memberDAO.getMemberById(m_id);
+	}
+
+	public int updateMember(MemberDTO memberDTO) throws Exception {
+		return memberDAO.updateMember(memberDTO);
+	}
 }

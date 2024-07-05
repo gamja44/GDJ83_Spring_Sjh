@@ -18,6 +18,10 @@
         <p>Phone: ${member.phone}</p>
         <p>Member Number: ${member.member_number}</p>
         <p>ID: ${member.member_id}</p>
+        
+        <div>
+        	<a href="/members/update" class="btn btn-secondary">회원수정</a>
+        </div>
     </div>
 
     <c:import url="/WEB-INF/views/sample/bootFooter.jsp"></c:import>
