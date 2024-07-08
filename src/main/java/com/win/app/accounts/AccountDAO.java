@@ -1,12 +1,8 @@
 package com.win.app.accounts;
 
-import java.util.List;
-
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
-import com.win.app.members.MemberDTO;
 
 @Repository
 public class AccountDAO {
@@ -19,7 +15,8 @@ public class AccountDAO {
 		return sqlSession.insert(NAMESPACE + "createAccount", accountDTO);
 	}
 
-	public List<AccountDTO> list(MemberDTO memberDTO) throws Exception {
-		return sqlSession.selectList(NAMESPACE + "list", memberDTO);
+	// 기존의 AccountDTO 타입 대신 String 타입의 accountNumber를 받도록 수정
+	public AccountDTO detail(String accountNumber) throws Exception {
+		return sqlSession.selectOne(NAMESPACE + "detail", accountNumber);
 	}
 }

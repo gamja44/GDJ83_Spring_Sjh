@@ -2,6 +2,9 @@ package com.win.app.accounts;
 
 import java.sql.Date;
 
+import com.win.app.members.MemberDTO;
+import com.win.app.product.ProductDTO;
+
 public class AccountDTO {
 	private Integer product_info_id;
 	private Integer product_id;
@@ -9,6 +12,24 @@ public class AccountDTO {
 	private Date join_date;
 	private String account_number;
 	private Double balance;
+	private MemberDTO memberDTO;
+	private ProductDTO productDTO;
+
+	public MemberDTO getMemberDTO() {
+		return memberDTO;
+	}
+
+	public void setMemberDTO(MemberDTO memberDTO) {
+		this.memberDTO = memberDTO;
+	}
+
+	public ProductDTO getProductDTO() {
+		return productDTO;
+	}
+
+	public void setProductDTO(ProductDTO productDTO) {
+		this.productDTO = productDTO;
+	}
 
 	public Integer getProduct_info_id() {
 		return product_info_id;

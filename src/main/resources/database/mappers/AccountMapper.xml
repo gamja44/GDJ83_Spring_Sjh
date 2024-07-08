@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper
-  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.win.app.accounts.AccountDAO">
     <insert id="createAccount" parameterType="com.win.app.accounts.AccountDTO">
@@ -9,9 +7,36 @@
         VALUES (PRODUCT_INFO_SEQ.NEXTVAL, #{product_id}, #{m_id}, SYSDATE, #{account_number}, #{balance})
     </insert>
 
-    <select id="list" parameterType="com.win.app.members.MemberDTO" resultType="com.win.app.accounts.AccountDTO">
-        SELECT PRODUCT_INFO_ID, PRODUCT_ID, M_ID, JOIN_DATE, ACCOUNT_NUMBER, BALANCE
-        FROM PRODUCT_INFO
-        WHERE M_ID = #{m_id}
+    <select id="detail" parameterType="String" resultMap="detailResult">
+        SELECT
+            pi.ACCOUNT_NUMBER,
+            pi.PRODUCT_ID AS pi_PRODUCT_ID,
+            pi.M_ID AS MEMBER_ID,
+            pi.JOIN_DATE,
+            pi.BALANCE,
+            p.PRODUCT_ID AS p_PRODUCT_ID,
+            p.PRODUCT_TYPE,
+            p.PRODUCT_RATE,
+            p.PRODUCT_DETAIL
+        FROM
+            PRODUCT_INFO pi
+        INNER JOIN
+            PRODUCT p ON pi.PRODUCT_ID = p.PRODUCT_ID
+        WHERE
+            pi.ACCOUNT_NUMBER = #{account_number}
     </select>
+    
+    <resultMap id="detailResult" type="com.win.app.accounts.AccountDTO">
+        <id column="ACCOUNT_NUMBER" property="account_number"/>
+        <result column="pi_PRODUCT_ID" property="product_id"/>
+        <result column="MEMBER_ID" property="m_id"/>
+        <result column="JOIN_DATE" property="join_date"/>
+        <result column="BALANCE" property="balance"/>
+        <association property="productDTO" javaType="com.win.app.product.ProductDTO">
+            <id column="p_PRODUCT_ID" property="product_id"/>
+            <result column="PRODUCT_TYPE" property="product_type"/>
+            <result column="PRODUCT_RATE" property="product_rate"/>
+            <result column="PRODUCT_DETAIL" property="product_detail"/>
+        </association>
+    </resultMap>
 </mapper>

@@ -64,7 +64,8 @@ public class MemberController {
 	public String mypage(HttpSession session, Model model) throws Exception {
 		MemberDTO sessionMember = (MemberDTO) session.getAttribute("member");
 		if (sessionMember != null) {
-			model.addAttribute("member", sessionMember);
+			MemberDTO memberDTO = memberService.getMemberWithAccounts(sessionMember.getM_id());
+			model.addAttribute("member", memberDTO);
 			return "members/mypage"; // mypage.jsp로 이동
 		} else {
 			return "redirect:/members/login"; // 로그인 페이지로 리다이렉트

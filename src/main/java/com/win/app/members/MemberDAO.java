@@ -23,11 +23,19 @@ public class MemberDAO {
 		return sqlSession.selectOne(NAMESPACE + "getMemberById", m_id);
 	}
 
+	public MemberDTO getMemberWithAccounts(int m_id) throws Exception {
+		return sqlSession.selectOne(NAMESPACE + "getMemberWithAccounts", m_id);
+	}
+
 	public int updateMember(MemberDTO memberDTO) throws Exception {
 		return sqlSession.update(NAMESPACE + "updateMember", memberDTO);
 	}
 
 	public int deleteMember(int m_id) throws Exception {
 		return sqlSession.delete(NAMESPACE + "deleteMember", m_id);
+	}
+
+	public MemberDTO detail(MemberDTO memberDTO) throws Exception {
+		return sqlSession.selectOne(NAMESPACE + "detail", memberDTO);
 	}
 }

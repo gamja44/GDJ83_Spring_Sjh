@@ -15,7 +15,10 @@ public class AccountService {
 		Calendar calendar = Calendar.getInstance();
 		accountDTO.setAccount_number("AB" + calendar.getTimeInMillis());
 		accountDTO.setBalance(0.0); // 초기 잔고 설정
-
 		return accountDAO.add(accountDTO);
+	}
+
+	public AccountDTO detail(String accountNumber) throws Exception {
+		return accountDAO.detail(accountNumber);
 	}
 }

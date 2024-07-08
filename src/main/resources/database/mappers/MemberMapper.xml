@@ -5,47 +5,63 @@
   
 <mapper namespace="com.win.app.members.MemberDAO">
 
- 	<insert id="join" parameterType="com.win.app.members.MemberDTO">
+    <insert id="join" parameterType="com.win.app.members.MemberDTO">
         INSERT INTO MEMBERS (M_ID, MEMBER_NAME, MEMBER_NUMBER, PHONE, EMAIL, MEMBER_ID, MEMBER_PWD)
         VALUES (MEMBERS_SEQ.NEXTVAL, #{member_name}, #{member_number}, #{phone}, #{email}, #{member_id}, #{member_pwd})
     </insert>
-
- <select id="login" parameterType="MemberDTO" resultMap="loginResult">
-        SELECT
-         m.*,
-         pi.product_info_id,
-         pi.product_id,
-         pi.join_date,
-         pi.account_number,
-         pi.balance
-         FROM MEMBERS m
-         LEFT JOIN PRODUCT_INFO pi ON m.M_ID = pi.M_ID
-        WHERE m.MEMBER_ID = #{member_id}        
+    
+  
+    <select id="login" parameterType="com.win.app.members.MemberDTO" resultType="com.win.app.members.MemberDTO">
+        SELECT 
+            m.M_ID,
+            m.MEMBER_ID,
+            m.MEMBER_PWD,
+            m.MEMBER_NAME
+        FROM MEMBERS m
+        WHERE m.MEMBER_ID = #{member_id}
     </select>
     
-    <resultMap type="MemberDTO" id="loginResult">
-    	<id column="M_ID" property="m_id"/>
+    <select id="getMemberWithAccounts" parameterType="int" resultMap="memberWithAccountsResult">
+        SELECT 
+            m.M_ID,
+            m.MEMBER_NAME,
+            m.MEMBER_NUMBER,
+            m.PHONE,
+            m.EMAIL,
+            m.MEMBER_ID,
+            m.MEMBER_PWD,
+            pi.PRODUCT_INFO_ID,
+            pi.PRODUCT_ID,
+            pi.JOIN_DATE,
+            pi.ACCOUNT_NUMBER,
+            pi.BALANCE
+        FROM MEMBERS m
+        LEFT JOIN PRODUCT_INFO pi ON m.M_ID = pi.M_ID
+        WHERE m.M_ID = #{m_id}
+    </select>
+    
+    <resultMap id="memberWithAccountsResult" type="com.win.app.members.MemberDTO">
+        <id column="M_ID" property="m_id"/>
         <result column="MEMBER_NAME" property="member_name"/>
         <result column="MEMBER_NUMBER" property="member_number"/>
         <result column="PHONE" property="phone"/>
         <result column="EMAIL" property="email"/>
         <result column="MEMBER_ID" property="member_id"/>
         <result column="MEMBER_PWD" property="member_pwd"/>
-    	<collection property="dtos" javaType="java.util.List" ofType="AccountDTO">
-    	   <id column="PRODUCT_INFO_ID" property="product_info_id"/>
+        <collection property="dtos" ofType="com.win.app.accounts.AccountDTO">
+            <id column="PRODUCT_INFO_ID" property="product_info_id"/>
             <result column="PRODUCT_ID" property="product_id"/>
             <result column="JOIN_DATE" property="join_date"/>
             <result column="ACCOUNT_NUMBER" property="account_number"/>
             <result column="BALANCE" property="balance"/>
-    	  	
-    	</collection>
+        </collection>
     </resultMap>
-    
+
     <select id="getMemberById" parameterType="int" resultType="com.win.app.members.MemberDTO">
         SELECT * FROM MEMBERS WHERE M_ID = #{m_id}
     </select>
     
-   <update id="updateMember" parameterType="com.win.app.members.MemberDTO">
+    <update id="updateMember" parameterType="com.win.app.members.MemberDTO">
         UPDATE MEMBERS
         SET MEMBER_NAME = #{member_name, jdbcType=VARCHAR},
             MEMBER_NUMBER = #{member_number, jdbcType=VARCHAR},
@@ -54,9 +70,26 @@
         WHERE M_ID = #{m_id, jdbcType=INTEGER}
     </update>
     
-    
     <delete id="deleteMember" parameterType="int">
-    	DELETE FROM MEMBERS WHERE M_ID = #{m_id}       
+        DELETE FROM MEMBERS WHERE M_ID = #{m_id}       
     </delete>
     
+    <select id="detail" parameterType="int" resultType="com.win.app.members.MemberDTO">
+        SELECT 
+            m.M_ID,
+            m.MEMBER_NAME,
+            m.MEMBER_NUMBER,
+            m.PHONE,
+            m.EMAIL,
+            m.MEMBER_ID,
+            m.MEMBER_PWD,
+            pi.PRODUCT_INFO_ID,
+            pi.PRODUCT_ID,
+            pi.JOIN_DATE,
+            pi.ACCOUNT_NUMBER,
+            pi.BALANCE
+        FROM MEMBERS m
+        LEFT JOIN PRODUCT_INFO pi ON m.M_ID = pi.M_ID
+        WHERE m.M_ID = #{m_id}
+    </select>
 </mapper>
