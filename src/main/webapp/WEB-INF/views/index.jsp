@@ -10,39 +10,38 @@
 </head>
 <body>
 <c:import url="/WEB-INF/views/sample/header.jsp"></c:import>
-	
+    
 <div class="container-fluid mt-5">
-	<div class="row justify-content-center">
-	
-	<c:if test="${not empty member}">
-		<div>
-		<h3>${member.member.member_name}님 환영합니다</h3>
-		</div>
-	</c:if>
-	
-	<div id="carouselExampleAutoplaying" class="carousel slide col-md-6" data-bs-ride="carousel">
-	  <div class="carousel-inner">
-	    <div class="carousel-item active">
-	      <img src="./resources/images/index/IMG_5899.jpg" class="d-block w-100" alt="...">
-	    </div>
-	    <div class="carousel-item">
-	      <img src="./resources/images/index/IMG_6017.jpg" class="d-block w-100" alt="...">
-	    </div>
-	    <div class="carousel-item">
-	      <img src="./resources/images/index/IMG_6019.jpg" class="d-block w-100" alt="...">
-	    </div>
-	  </div>
-	  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
-	    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-	    <span class="visually-hidden">Previous</span>
-	  </button>
-	  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
-	    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-	    <span class="visually-hidden">Next</span>
-	  </button>
-	</div>		
-		
-	</div>
+    <div class="row justify-content-center">
+    
+    <c:if test="${not empty member}">
+        <div>
+        <h3>${member.member_name}님 환영합니다</h3>
+        </div>
+    </c:if>
+    
+    <div id="carouselExampleAutoplaying" class="carousel slide col-md-6" data-bs-ride="carousel">
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <img src="./resources/images/index/IMG_5899.jpg" class="d-block w-100" alt="...">
+        </div>
+        <div class="carousel-item">
+          <img src="./resources/images/index/IMG_6017.jpg" class="d-block w-100" alt="...">
+        </div>
+        <div class="carousel-item">
+          <img src="./resources/images/index/IMG_6019.jpg" class="d-block w-100" alt="...">
+        </div>
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>        
+    </div>
 </div>
 
 <c:import url="/WEB-INF/views/sample/bootFooter.jsp"></c:import>

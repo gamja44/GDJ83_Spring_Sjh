@@ -1,5 +1,9 @@
 package com.win.app.members;
 
+import java.util.List;
+
+import com.win.app.accounts.AccountDAO;
+
 public class MemberDTO {
 	private Integer m_id;
 	private String member_name;
@@ -8,6 +12,15 @@ public class MemberDTO {
 	private String email;
 	private String member_id;
 	private String member_pwd;
+	private List<AccountDAO> dtos;
+
+	public List<AccountDAO> getDtos() {
+		return dtos;
+	}
+
+	public void setDtos(List<AccountDAO> dtos) {
+		this.dtos = dtos;
+	}
 
 	public Integer getM_id() {
 		return m_id;

@@ -10,9 +10,36 @@
         VALUES (MEMBERS_SEQ.NEXTVAL, #{member_name}, #{member_number}, #{phone}, #{email}, #{member_id}, #{member_pwd})
     </insert>
 
- <select id="login" parameterType="MemberDTO" resultType="MemberDTO">
-        SELECT * FROM MEMBERS WHERE MEMBER_ID = #{member_id}
+ <select id="login" parameterType="MemberDTO" resultMap="loginResult">
+        SELECT
+         m.*,
+         pi.product_info_id,
+         pi.product_id,
+         pi.join_date,
+         pi.account_number,
+         pi.balance
+         FROM MEMBERS m
+         LEFT JOIN PRODUCT_INFO pi ON m.M_ID = pi.M_ID
+        WHERE m.MEMBER_ID = #{member_id}        
     </select>
+    
+    <resultMap type="MemberDTO" id="loginResult">
+    	<id column="M_ID" property="m_id"/>
+        <result column="MEMBER_NAME" property="member_name"/>
+        <result column="MEMBER_NUMBER" property="member_number"/>
+        <result column="PHONE" property="phone"/>
+        <result column="EMAIL" property="email"/>
+        <result column="MEMBER_ID" property="member_id"/>
+        <result column="MEMBER_PWD" property="member_pwd"/>
+    	<collection property="dtos" javaType="java.util.List" ofType="AccountDTO">
+    	   <id column="PRODUCT_INFO_ID" property="product_info_id"/>
+            <result column="PRODUCT_ID" property="product_id"/>
+            <result column="JOIN_DATE" property="join_date"/>
+            <result column="ACCOUNT_NUMBER" property="account_number"/>
+            <result column="BALANCE" property="balance"/>
+    	  	
+    	</collection>
+    </resultMap>
     
     <select id="getMemberById" parameterType="int" resultType="com.win.app.members.MemberDTO">
         SELECT * FROM MEMBERS WHERE M_ID = #{m_id}

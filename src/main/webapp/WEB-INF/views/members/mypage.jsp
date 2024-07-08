@@ -13,15 +13,15 @@
 
     <div class="container-fluid mt-5">
         <h1>My Page</h1>
-        <p>Welcome, ${member.member.member_name}!</p>
-        <p>Email: ${member.member.email}</p>
-        <p>Phone: ${member.member.phone}</p>
-        <p>Member Number: ${member.member.member_number}</p>
-        <p>ID: ${member.member.member_id}</p>
+        <p>Welcome, ${member.member_name}!</p>
+        <p>Email: ${member.email}</p>
+        <p>Phone: ${member.phone}</p>
+        <p>Member Number: ${member.member_number}</p>
+        <p>ID: ${member.member_id}</p>
 
         <div>
             <h3>계좌정보</h3>
-            <c:forEach var="ac" items="${member.accounts}">
+            <c:forEach var="ac" items="${member.dtos}">
                 <p>계좌번호: ${ac.account_number}, 잔액: ${ac.balance}</p>
             </c:forEach>
         </div>
@@ -41,3 +41,4 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+

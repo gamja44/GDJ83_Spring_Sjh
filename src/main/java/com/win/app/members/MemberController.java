@@ -1,7 +1,5 @@
 package com.win.app.members;
 
-import java.util.Map;
-
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -21,7 +19,6 @@ public class MemberController {
 
 	@RequestMapping(value = "join", method = RequestMethod.GET)
 	public void join() throws Exception {
-
 	}
 
 	@RequestMapping(value = "join", method = RequestMethod.POST)
@@ -50,9 +47,9 @@ public class MemberController {
 			response.addCookie(cookie);
 		}
 
-		Map<String, Object> map = memberService.login(memberDTO);
-		if (map != null) {
-			session.setAttribute("member", map);
+		MemberDTO result = memberService.login(memberDTO);
+		if (result != null) {
+			session.setAttribute("member", result);
 		}
 		return "redirect:/";
 	}
@@ -65,10 +62,9 @@ public class MemberController {
 
 	@RequestMapping(value = "mypage", method = RequestMethod.GET)
 	public String mypage(HttpSession session, Model model) throws Exception {
-		Map<String, Object> sessionMap = (Map<String, Object>) session.getAttribute("member");
-		MemberDTO sessionMember = (MemberDTO) sessionMap.get("member");
+		MemberDTO sessionMember = (MemberDTO) session.getAttribute("member");
 		if (sessionMember != null) {
-			model.addAttribute("member", sessionMap);
+			model.addAttribute("member", sessionMember);
 			return "members/mypage"; // mypage.jsp로 이동
 		} else {
 			return "redirect:/members/login"; // 로그인 페이지로 리다이렉트
@@ -77,8 +73,7 @@ public class MemberController {
 
 	@RequestMapping(value = "update", method = RequestMethod.GET)
 	public String update(HttpSession session, Model model) throws Exception {
-		Map<String, Object> sessionMap = (Map<String, Object>) session.getAttribute("member");
-		MemberDTO sessionMember = (MemberDTO) sessionMap.get("member");
+		MemberDTO sessionMember = (MemberDTO) session.getAttribute("member");
 		if (sessionMember != null) {
 			MemberDTO memberDTO = memberService.getMemberById(sessionMember.getM_id());
 			model.addAttribute("member", memberDTO);
@@ -92,17 +87,14 @@ public class MemberController {
 	public String update(MemberDTO memberDTO, HttpSession session) throws Exception {
 		int result = memberService.updateMember(memberDTO);
 		if (result > 0) {
-			Map<String, Object> sessionMap = (Map<String, Object>) session.getAttribute("member");
-			sessionMap.put("member", memberDTO);
-			session.setAttribute("member", sessionMap);
+			session.setAttribute("member", memberDTO);
 		}
 		return "redirect:/members/mypage";
 	}
 
 	@RequestMapping(value = "delete", method = RequestMethod.POST)
 	public String delete(HttpSession session) throws Exception {
-		Map<String, Object> sessionMap = (Map<String, Object>) session.getAttribute("member");
-		MemberDTO sessionMember = (MemberDTO) sessionMap.get("member");
+		MemberDTO sessionMember = (MemberDTO) session.getAttribute("member");
 		if (sessionMember != null) {
 			int result = memberService.deleteMember(sessionMember.getM_id());
 			if (result > 0) {

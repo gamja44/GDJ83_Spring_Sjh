@@ -1,14 +1,9 @@
 package com.win.app.members;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.win.app.accounts.AccountDAO;
-import com.win.app.accounts.AccountDTO;
 
 @Service
 public class MemberService {
@@ -22,18 +17,18 @@ public class MemberService {
 		return memberDAO.join(memberDTO);
 	}
 
-	public Map<String, Object> login(MemberDTO memberDTO) throws Exception {
-		Map<String, Object> map = new HashMap<String, Object>();
+	public MemberDTO login(MemberDTO memberDTO) throws Exception {
+
 		MemberDTO result = memberDAO.login(memberDTO);
 		if (result != null) {
 			if (result.getMember_pwd().equals(memberDTO.getMember_pwd())) {
-				List<AccountDTO> accounts = accountDAO.list(result);
-				map.put("member", result);
-				map.put("accounts", accounts);
-				return map;
+
+				return result;
+			} else {
+				result = null;
 			}
 		}
-		return null;
+		return result;
 	}
 
 	public MemberDTO getMemberById(int m_id) throws Exception {
