@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,7 +16,7 @@
 	
 	<c:if test="${not empty member}">
 		<div>
-		<h3>${member.member_name}님 환영합니다</h3>
+		<h3>${member.member.member_name}님 환영합니다</h3>
 		</div>
 	</c:if>
 	
@@ -43,10 +42,8 @@
 	  </button>
 	</div>		
 		
-		</div>
 	</div>
-	
-	
+</div>
 
 <c:import url="/WEB-INF/views/sample/bootFooter.jsp"></c:import>
 </body>

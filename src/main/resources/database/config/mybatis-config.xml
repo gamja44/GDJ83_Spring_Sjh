@@ -8,6 +8,7 @@
   <typeAliases>
   	<typeAlias type="com.win.app.product.ProductDTO" alias="ProductDTO"/>
   	<typeAlias type="com.win.app.members.MemberDTO" alias="MemberDTO"/>
+  	<typeAlias type="com.win.app.accounts.AccountDTO" alias="AccountDTO"/>
   	<typeAlias type="java.util.Map" alias="Map"/>
   </typeAliases>
   

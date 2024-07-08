@@ -6,6 +6,12 @@
 <mapper namespace="com.win.app.accounts.AccountDAO">
     <insert id="createAccount" parameterType="com.win.app.accounts.AccountDTO">
         INSERT INTO PRODUCT_INFO (PRODUCT_INFO_ID, PRODUCT_ID, M_ID, JOIN_DATE, ACCOUNT_NUMBER, BALANCE)
-        VALUES (PRODUCT_INFO_SEQ.NEXTVAL, #{product_id}, #{m_id}, #{join_date}, #{account_number}, #{balance})
+        VALUES (PRODUCT_INFO_SEQ.NEXTVAL, #{product_id}, #{m_id}, SYSDATE, #{account_number}, #{balance})
     </insert>
+
+    <select id="list" parameterType="com.win.app.members.MemberDTO" resultType="com.win.app.accounts.AccountDTO">
+        SELECT PRODUCT_INFO_ID, PRODUCT_ID, M_ID, JOIN_DATE, ACCOUNT_NUMBER, BALANCE
+        FROM PRODUCT_INFO
+        WHERE M_ID = #{m_id}
+    </select>
 </mapper>
