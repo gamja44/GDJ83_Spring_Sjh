@@ -2,6 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.win.app.accounts.AccountDAO">
+
     <insert id="createAccount" parameterType="com.win.app.accounts.AccountDTO">
         INSERT INTO PRODUCT_INFO (PRODUCT_INFO_ID, PRODUCT_ID, M_ID, JOIN_DATE, ACCOUNT_NUMBER, BALANCE)
         VALUES (PRODUCT_INFO_SEQ.NEXTVAL, #{product_id}, #{m_id}, SYSDATE, #{account_number}, #{balance})
@@ -9,12 +10,12 @@
 
     <select id="detail" parameterType="String" resultMap="detailResult">
         SELECT
+            pi.PRODUCT_INFO_ID,
             pi.ACCOUNT_NUMBER,
-            pi.PRODUCT_ID AS pi_PRODUCT_ID,
-            pi.M_ID AS MEMBER_ID,
+            pi.PRODUCT_ID,
+            pi.M_ID,
             pi.JOIN_DATE,
             pi.BALANCE,
-            p.PRODUCT_ID AS p_PRODUCT_ID,
             p.PRODUCT_TYPE,
             p.PRODUCT_RATE,
             p.PRODUCT_DETAIL
@@ -26,14 +27,26 @@
             pi.ACCOUNT_NUMBER = #{account_number}
     </select>
     
+    <update id="updateBalance" parameterType="com.win.app.accounts.AccountDTO">
+        UPDATE PRODUCT_INFO
+        SET BALANCE = #{balance}
+        WHERE ACCOUNT_NUMBER = #{account_number}
+    </update>
+    
+    <insert id="insertHistory" parameterType="com.win.app.history.HistoryDTO">
+        INSERT INTO HISTORY (HISTORY_ID, PRODUCT_INFO_ID, HISTORY_TIME, AMOUNT, BALANCE, TYPE)
+        VALUES (HISTORY_SEQ.NEXTVAL, #{product_info_id}, SYSDATE, #{amount}, #{balance}, #{type})
+    </insert>
+
     <resultMap id="detailResult" type="com.win.app.accounts.AccountDTO">
-        <id column="ACCOUNT_NUMBER" property="account_number"/>
-        <result column="pi_PRODUCT_ID" property="product_id"/>
-        <result column="MEMBER_ID" property="m_id"/>
+        <id column="PRODUCT_INFO_ID" property="product_info_id"/>
+        <result column="ACCOUNT_NUMBER" property="account_number"/>
+        <result column="PRODUCT_ID" property="product_id"/>
+        <result column="M_ID" property="m_id"/>
         <result column="JOIN_DATE" property="join_date"/>
         <result column="BALANCE" property="balance"/>
         <association property="productDTO" javaType="com.win.app.product.ProductDTO">
-            <id column="p_PRODUCT_ID" property="product_id"/>
+            <id column="PRODUCT_ID" property="product_id"/>
             <result column="PRODUCT_TYPE" property="product_type"/>
             <result column="PRODUCT_RATE" property="product_rate"/>
             <result column="PRODUCT_DETAIL" property="product_detail"/>

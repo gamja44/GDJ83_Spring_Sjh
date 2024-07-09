@@ -35,4 +35,22 @@ public class AccountController {
 		model.addAttribute("account", accountDTO);
 		return "account/detail";
 	}
+
+	@RequestMapping(value = "/transfer", method = RequestMethod.GET)
+	public String transferForm(@RequestParam("fromAccount") String fromAccount, Model model) {
+		model.addAttribute("fromAccount", fromAccount);
+		return "account/transfer";
+	}
+
+	@RequestMapping(value = "/transfer", method = RequestMethod.POST)
+	public String transfer(@RequestParam("fromAccount") String fromAccount, @RequestParam("toAccount") String toAccount,
+			@RequestParam("amount") Double amount, Model model) throws Exception {
+		boolean success = accountService.transfer(fromAccount, toAccount, amount);
+		if (success) {
+			return "redirect:/members/mypage";
+		} else {
+			model.addAttribute("error", "Transfer failed due to insufficient funds or invalid account.");
+			return "account/transfer";
+		}
+	}
 }

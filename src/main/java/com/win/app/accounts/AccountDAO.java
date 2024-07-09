@@ -4,6 +4,8 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.win.app.history.HistoryDTO;
+
 @Repository
 public class AccountDAO {
 
@@ -15,8 +17,15 @@ public class AccountDAO {
 		return sqlSession.insert(NAMESPACE + "createAccount", accountDTO);
 	}
 
-	// 기존의 AccountDTO 타입 대신 String 타입의 accountNumber를 받도록 수정
 	public AccountDTO detail(String accountNumber) throws Exception {
 		return sqlSession.selectOne(NAMESPACE + "detail", accountNumber);
+	}
+
+	public int updateBalance(AccountDTO accountDTO) throws Exception {
+		return sqlSession.update(NAMESPACE + "updateBalance", accountDTO);
+	}
+
+	public int insertHistory(HistoryDTO historyDTO) throws Exception {
+		return sqlSession.insert(NAMESPACE + "insertHistory", historyDTO);
 	}
 }
