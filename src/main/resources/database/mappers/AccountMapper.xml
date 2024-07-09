@@ -3,11 +3,13 @@
 
 <mapper namespace="com.win.app.accounts.AccountDAO">
 
+    <!-- 계좌 생성 SQL 매핑 -->
     <insert id="createAccount" parameterType="com.win.app.accounts.AccountDTO">
         INSERT INTO PRODUCT_INFO (PRODUCT_INFO_ID, PRODUCT_ID, M_ID, JOIN_DATE, ACCOUNT_NUMBER, BALANCE)
         VALUES (PRODUCT_INFO_SEQ.NEXTVAL, #{product_id}, #{m_id}, SYSDATE, #{account_number}, #{balance})
     </insert>
 
+    <!-- 계좌 상세 조회 SQL 매핑 -->
     <select id="detail" parameterType="String" resultMap="detailResult">
         SELECT
             pi.PRODUCT_INFO_ID,
@@ -26,18 +28,34 @@
         WHERE
             pi.ACCOUNT_NUMBER = #{account_number}
     </select>
-    
-    <update id="updateBalance" parameterType="com.win.app.accounts.AccountDTO">
+
+    <!-- 내 계좌 잔고 업데이트 SQL 매핑 -->
+    <update id="updateFromAccountBalance" parameterType="com.win.app.accounts.AccountDTO">
         UPDATE PRODUCT_INFO
         SET BALANCE = #{balance}
-        WHERE ACCOUNT_NUMBER = #{account_number}
+        WHERE PRODUCT_INFO_ID = #{product_info_id}
     </update>
-    
-    <insert id="insertHistory" parameterType="com.win.app.history.HistoryDTO">
+
+    <!-- 상대방 계좌 잔고 업데이트 SQL 매핑 -->
+    <update id="updateToAccountBalance" parameterType="com.win.app.accounts.AccountDTO">
+        UPDATE PRODUCT_INFO
+        SET BALANCE = #{balance}
+        WHERE PRODUCT_INFO_ID = #{product_info_id}
+    </update>
+
+    <!-- 내 계좌 거래 내역 삽입 SQL 매핑 -->
+    <insert id="insertFromAccountHistory" parameterType="com.win.app.history.HistoryDTO">
         INSERT INTO HISTORY (HISTORY_ID, PRODUCT_INFO_ID, HISTORY_TIME, AMOUNT, BALANCE, TYPE)
         VALUES (HISTORY_SEQ.NEXTVAL, #{product_info_id}, SYSDATE, #{amount}, #{balance}, #{type})
     </insert>
 
+    <!-- 상대방 계좌 거래 내역 삽입 SQL 매핑 -->
+    <insert id="insertToAccountHistory" parameterType="com.win.app.history.HistoryDTO">
+        INSERT INTO HISTORY (HISTORY_ID, PRODUCT_INFO_ID, HISTORY_TIME, AMOUNT, BALANCE, TYPE)
+        VALUES (HISTORY_SEQ.NEXTVAL, #{product_info_id}, SYSDATE, #{amount}, #{balance}, #{type})
+    </insert>
+
+    <!-- 계좌 상세 조회 결과 매핑 -->
     <resultMap id="detailResult" type="com.win.app.accounts.AccountDTO">
         <id column="PRODUCT_INFO_ID" property="product_info_id"/>
         <result column="ACCOUNT_NUMBER" property="account_number"/>
@@ -53,3 +71,4 @@
         </association>
     </resultMap>
 </mapper>
+
