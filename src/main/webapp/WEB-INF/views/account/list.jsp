@@ -17,9 +17,7 @@
         <div>
             <a href="?accountNumber=${param.accountNumber}&order=1" class="btn btn-secondary">과거순으로</a>
             <a href="?accountNumber=${param.accountNumber}&order=0" class="btn btn-secondary">최신순으로</a>
-            <a href="?accountNumber=${param.accountNumber}&order=0&type=입금" class="btn btn-secondary">입금만</a>
-            <a href="?accountNumber=${param.accountNumber}&order=0&type=출금" class="btn btn-secondary">출금만</a>
-            <a href="?accountNumber=${param.accountNumber}&order=0&type=" class="btn btn-secondary">입금/출금</a>
+            
         </div>
 
         <table class="table table-striped mt-3">
