@@ -1,5 +1,7 @@
 package com.win.app.accounts;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -41,5 +43,10 @@ public class AccountDAO {
 	// 상대방 계좌 거래 내역 삽입
 	public int insertToAccountHistory(HistoryDTO historyDTO) throws Exception {
 		return sqlSession.insert(NAMESPACE + "insertToAccountHistory", historyDTO);
+	}
+
+	// 거래내역 조회
+	public List<HistoryDTO> getHistoryList(Integer productInfoId) throws Exception {
+		return sqlSession.selectList(NAMESPACE + "getHistoryList", productInfoId);
 	}
 }

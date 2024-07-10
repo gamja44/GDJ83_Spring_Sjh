@@ -54,6 +54,20 @@
         INSERT INTO HISTORY (HISTORY_ID, PRODUCT_INFO_ID, HISTORY_TIME, AMOUNT, BALANCE, TYPE)
         VALUES (HISTORY_SEQ.NEXTVAL, #{product_info_id}, SYSDATE, #{amount}, #{balance}, #{type})
     </insert>
+    
+    <!-- 거래 내역 조회 SQL 매핑 -->
+   <select id="getHistoryList" parameterType="int" resultType="com.win.app.history.HistoryDTO">
+        SELECT
+            HISTORY_TIME,
+            AMOUNT,
+            BALANCE
+        FROM
+            HISTORY
+        WHERE
+            PRODUCT_INFO_ID = #{product_info_id}
+        ORDER BY
+            HISTORY_TIME DESC
+    </select>
 
     <!-- 계좌 상세 조회 결과 매핑 -->
     <resultMap id="detailResult" type="com.win.app.accounts.AccountDTO">

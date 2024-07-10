@@ -1,6 +1,7 @@
 package com.win.app.accounts;
 
 import java.util.Calendar;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -66,5 +67,11 @@ public class AccountService {
 		} else {
 			return false;
 		}
+	}
+
+	// 거래내역 조회
+	public List<HistoryDTO> getHistoryList(Integer productInfoId) throws Exception {
+		return accountDAO.getHistoryList(productInfoId);
+
 	}
 }
