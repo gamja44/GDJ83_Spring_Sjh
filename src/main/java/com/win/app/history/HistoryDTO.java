@@ -57,5 +57,4 @@ public class HistoryDTO {
 	public void setType(String type) {
 		this.type = type;
 	}
-
 }

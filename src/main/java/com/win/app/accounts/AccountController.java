@@ -1,7 +1,5 @@
 package com.win.app.accounts;
 
-import java.util.List;
-
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.win.app.history.HistoryDTO;
 import com.win.app.members.MemberDTO;
 
 @Controller
@@ -58,9 +55,13 @@ public class AccountController {
 	}
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public String getHistoryList(@RequestParam("product_info_id") Integer productInfoId, Model model) throws Exception {
-		List<HistoryDTO> historyList = accountService.getHistoryList(productInfoId);
-		model.addAttribute("historyList", historyList);
+	public String getHistoryList(@RequestParam("accountNumber") String accountNumber,
+			@RequestParam(value = "order", required = false, defaultValue = "0") Integer order, Model model)
+			throws Exception {
+		ListOption listOption = new ListOption();
+		listOption.setAccountNumber(accountNumber);
+		listOption.setOrder(order);
+		model.addAttribute("historyList", accountService.getHistoryList(listOption));
 		return "account/list";
 	}
 }

@@ -14,7 +14,7 @@
     <div class="container-fluid mt-5">
         <h1>Account Detail</h1>
         <a href="/account/transfer?fromAccount=${account.account_number}" class="btn btn-primary">이체</a>
-        <a href="/account/list?product_info_id=${account.product_info_id}" class="btn btn-secondary">내역조회</a>
+        <a href="/account/list?accountNumber=${account.account_number}" class="btn btn-secondary">내역조회</a>
         <p>Account Number: ${account.account_number}</p>
         <p>Balance: ${account.balance}</p>
         <p>Join Date: ${account.join_date}</p>

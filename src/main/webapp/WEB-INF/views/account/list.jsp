@@ -13,10 +13,20 @@
 
     <div class="container-fluid mt-5">
         <h1>Transaction History</h1>
-        <table class="table table-striped">
+
+        <div>
+            <a href="?accountNumber=${param.accountNumber}&order=1" class="btn btn-secondary">과거순으로</a>
+            <a href="?accountNumber=${param.accountNumber}&order=0" class="btn btn-secondary">최신순으로</a>
+            <a href="?accountNumber=${param.accountNumber}&order=0&type=입금" class="btn btn-secondary">입금만</a>
+            <a href="?accountNumber=${param.accountNumber}&order=0&type=출금" class="btn btn-secondary">출금만</a>
+            <a href="?accountNumber=${param.accountNumber}&order=0&type=" class="btn btn-secondary">입금/출금</a>
+        </div>
+
+        <table class="table table-striped mt-3">
             <thead>
                 <tr>
                     <th>Date</th>
+                    <th>구분</th>
                     <th>Amount</th>
                     <th>Balance</th>
                 </tr>
@@ -25,6 +35,19 @@
                 <c:forEach var="history" items="${historyList}">
                     <tr>
                         <td>${history.history_time}</td>
+                        <td>
+                            <c:choose>
+                                <c:when test="${history.amount > 0}">
+                                    <div style="color: green;">입금</div>
+                                </c:when>
+                                <c:when test="${history.amount < 0}">
+                                    <div style="color: red;">출금</div>
+                                </c:when>
+                                <c:otherwise>
+                                    <div>기타</div>
+                                </c:otherwise>
+                            </c:choose>
+                        </td>
                         <td>${history.amount}</td>
                         <td>${history.balance}</td>
                     </tr>

@@ -22,7 +22,7 @@
         <div>
             <h3>계좌정보</h3>
             <c:forEach var="ac" items="${member.dtos}">
-                <p><a href="../account/detail?account_number=${ac.account_number}">계좌번호: ${ac.account_number}</a>, 잔액: ${ac.balance}</p>
+                <p><a href="${pageContext.request.contextPath}/account/detail?account_number=${ac.account_number}">계좌번호: ${ac.account_number}</a>, 잔액: ${ac.balance}</p>
             </c:forEach>
         </div>
 
@@ -41,4 +41,3 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
-
