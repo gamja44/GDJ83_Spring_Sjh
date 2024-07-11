@@ -15,6 +15,20 @@ public class ProductDAOTest extends DefaultTest {
 	private ProductDAO productDAO;
 
 	@Test
+	public void addTest() throws Exception {
+		ProductDTO productDTO = new ProductDTO();
+		for (int i = 0; i < 100; i++) {
+			productDTO.setProduct_type("자유입출금" + i);
+			double r = ((int) (Math.random() * 1000)) / 100.0;
+			productDTO.setProduct_rate(r);
+			productDTO.setProduct_detail("상세설명" + i);
+			productDAO.addProduct(productDTO);
+			Thread.sleep(500);
+		}
+		System.out.println("Finish");
+	}
+
+	@Test
 	public void getDetailTest() throws Exception {
 		ProductDTO productDTO = new ProductDTO();
 		productDTO.setProduct_id(1);
