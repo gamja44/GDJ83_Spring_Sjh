@@ -1,4 +1,4 @@
-   <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
@@ -18,19 +18,39 @@
                 <tr>
                     <th>Product ID</th>
                     <th>Product Type</th>
-                  
                 </tr>
             </thead>
             <tbody>
                 <c:forEach var="product" items="${list}">
                     <tr>
                         <td>${product.product_id}</td>
-                       <td><a href="${pageContext.request.contextPath}/product/detail?product_id=${product.product_id}">${product.product_type}</a></td>
+                        <td><a href="${pageContext.request.contextPath}/product/detail?product_id=${product.product_id}">${product.product_type}</a></td>
                     </tr>
                 </c:forEach>
             </tbody>
         </table>
         <a href="${pageContext.request.contextPath}/product/add" class="btn btn-primary">Add Product</a>
+        <div class="mt-3">
+            <nav aria-label="Page navigation">
+                <ul class="pagination">
+                    <li class="page-item <c:if test='${currentPage == 1}'>disabled</c:if>">
+                        <a class="page-link" href="${pageContext.request.contextPath}/product/list?page=${currentPage - 1}&pageSize=${pageSize}" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    <c:forEach var="i" begin="1" end="${totalPages}">
+                        <li class="page-item <c:if test='${i == currentPage}'>active</c:if>">
+                            <a class="page-link" href="${pageContext.request.contextPath}/product/list?page=${i}&pageSize=${pageSize}">${i}</a>
+                        </li>
+                    </c:forEach>
+                    <li class="page-item <c:if test='${currentPage == totalPages}'>disabled</c:if>">
+                        <a class="page-link" href="${pageContext.request.contextPath}/product/list?page=${currentPage + 1}&pageSize=${pageSize}" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
     </div>
     
     <c:import url="/WEB-INF/views/sample/bootFooter.jsp"></c:import>
