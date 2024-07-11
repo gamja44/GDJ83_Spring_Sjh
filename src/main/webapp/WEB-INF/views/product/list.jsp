@@ -38,7 +38,9 @@
                             <span aria-hidden="true">&laquo;</span>
                         </a>
                     </li>
-                    <c:forEach var="i" begin="1" end="${totalPages}">
+                    <c:set var="startPage" value="${(currentPage - 1) / 5 * 5 + 1}" />
+                    <c:set var="endPage" value="${startPage + 4 < totalPages ? startPage + 4 : totalPages}" />
+                    <c:forEach var="i" begin="${startPage}" end="${endPage}">
                         <li class="page-item <c:if test='${i == currentPage}'>active</c:if>">
                             <a class="page-link" href="${pageContext.request.contextPath}/product/list?page=${i}&pageSize=${pageSize}">${i}</a>
                         </li>
@@ -57,3 +59,4 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+
