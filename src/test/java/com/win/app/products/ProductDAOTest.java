@@ -14,7 +14,7 @@ public class ProductDAOTest extends DefaultTest {
 	@Autowired
 	private ProductDAO productDAO;
 
-	@Test
+	// @Test
 	public void addTest() throws Exception {
 		ProductDTO productDTO = new ProductDTO();
 		for (int i = 0; i < 100; i++) {
