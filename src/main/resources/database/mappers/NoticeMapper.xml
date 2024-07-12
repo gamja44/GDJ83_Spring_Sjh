@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.win.app.notice.NoticeDAO">
+  <resultMap id="NoticeResultMap" type="com.win.app.notice.NoticeDTO">
+    <id column="BOARD_NUM" property="boardNum"/>
+    <result column="BOARD_WRITER" property="boardWriter"/>
+    <result column="BOARD_TITLE" property="boardTitle"/>
+    <result column="BOARD_CONTENTS" property="boardContents"/>
+    <result column="CREATE_DATE" property="createDate"/>
+    <result column="UPDATE_DATE" property="updateDate"/>
+    <result column="BOARD_CATEGORY" property="boardCategory"/>
+    <result column="BOARD_HIT" property="boardHit"/>
+  </resultMap>
+
+  <select id="getTotalCount" resultType="java.lang.Long" parameterType="com.win.app.util.Pager">
+    SELECT COUNT(BOARD_NUM) FROM NOTICE
+    <where>
+      BOARD_NUM > 0
+      <choose>
+        <when test="kind=='title'">
+          AND BOARD_TITLE LIKE '%' || #{search} || '%'
+        </when>
+        <when test="kind=='contents'">
+          AND BOARD_CONTENTS LIKE '%' || #{search} || '%'
+        </when>
+        <when test="kind=='writer'">
+          AND BOARD_WRITER = (SELECT M_ID FROM MEMBERS WHERE MEMBER_NAME LIKE '%' || #{search} || '%')
+        </when>
+      </choose>
+    </where>
+  </select>
+
+  <select id="getList" resultMap="NoticeResultMap" parameterType="com.win.app.util.Pager">
+    SELECT * FROM (
+      SELECT ROWNUM R, B.* FROM (
+        SELECT *
+        FROM NOTICE
+        <where>
+          BOARD_NUM > 0
+          <choose>
+            <when test="kind=='title'">
+              AND BOARD_TITLE LIKE '%' || #{search} || '%'
+            </when>
+            <when test="kind=='contents'">
+              AND BOARD_CONTENTS LIKE '%' || #{search} || '%'
+            </when>
+            <when test="kind=='writer'">
+              AND BOARD_WRITER = (SELECT M_ID FROM MEMBERS WHERE MEMBER_NAME LIKE '%' || #{search} || '%')
+            </when>
+          </choose>
+        </where>
+        ORDER BY BOARD_NUM DESC
+      ) B
+    )
+    WHERE R BETWEEN #{startRow} AND #{lastRow}
+  </select>
+
+  <insert id="add" parameterType="com.win.app.notice.NoticeDTO">
+    INSERT INTO NOTICE (BOARD_NUM, BOARD_TITLE, BOARD_WRITER, CREATE_DATE, UPDATE_DATE, BOARD_HIT, BOARD_CONTENTS, BOARD_CATEGORY)
+    VALUES (Board_SEQ.NEXTVAL, #{boardTitle}, #{boardWriter}, DEFAULT, DEFAULT, DEFAULT, #{boardContents, jdbcType=CLOB}, #{boardCategory, jdbcType=VARCHAR})
+  </insert>
+
+  <select id="detail" resultMap="NoticeResultMap" parameterType="int">
+    SELECT * FROM NOTICE WHERE BOARD_NUM = #{boardNum}
+  </select>
+
+  <update id="update" parameterType="com.win.app.notice.NoticeDTO">
+    UPDATE NOTICE SET
+      BOARD_TITLE = #{boardTitle},
+      BOARD_CONTENTS = #{boardContents, jdbcType=CLOB},
+      UPDATE_DATE = DEFAULT,
+      BOARD_CATEGORY = #{boardCategory, jdbcType=VARCHAR}
+    WHERE BOARD_NUM = #{boardNum}
+  </update>
+
+  <delete id="delete" parameterType="int">
+    DELETE FROM NOTICE WHERE BOARD_NUM = #{boardNum}
+  </delete>
+</mapper>
+
