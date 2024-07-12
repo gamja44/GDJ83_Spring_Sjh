@@ -17,18 +17,21 @@ public class ProductController {
 
 	@RequestMapping("/list")
 	public String getList(@RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "10") int pageSize,
+			@RequestParam(defaultValue = "product_type") String kind, @RequestParam(defaultValue = "") String search,
 			Model model) throws Exception {
 		int startRow = (page - 1) * pageSize + 1;
 		int endRow = page * pageSize;
 
-		List<ProductDTO> list = productService.getList(startRow, endRow);
-		int totalProducts = productService.getTotalProducts();
+		List<ProductDTO> list = productService.getList(startRow, endRow, kind, search);
+		int totalProducts = productService.getTotalProducts(kind, search);
 		int totalPages = (int) Math.ceil((double) totalProducts / pageSize);
 
 		model.addAttribute("list", list);
 		model.addAttribute("currentPage", page);
 		model.addAttribute("pageSize", pageSize);
 		model.addAttribute("totalPages", totalPages);
+		model.addAttribute("kind", kind);
+		model.addAttribute("search", search);
 
 		return "product/list";
 	}

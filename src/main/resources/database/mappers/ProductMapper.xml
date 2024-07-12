@@ -15,6 +15,18 @@
             ROW_NUMBER() OVER (ORDER BY p.PRODUCT_ID) AS rn
         FROM
             PRODUCT p
+        WHERE
+            <choose>
+                <when test="kind == 'product_type'">
+                    p.PRODUCT_TYPE LIKE #{search}
+                </when>
+                <when test="kind == 'product_detail'">
+                    p.PRODUCT_DETAIL LIKE #{search}
+                </when>
+                <otherwise>
+                    1=1
+                </otherwise>
+            </choose>
     )
     WHERE rn BETWEEN #{startRow} AND #{endRow}
   </select>
@@ -39,6 +51,18 @@
 
   <select id="getTotalProducts" resultType="int">
     SELECT COUNT(*) FROM PRODUCT
+    WHERE
+        <choose>
+            <when test="kind == 'product_type'">
+                PRODUCT_TYPE LIKE #{search}
+            </when>
+            <when test="kind == 'product_detail'">
+                PRODUCT_DETAIL LIKE #{search}
+            </when>
+            <otherwise>
+                1=1
+            </otherwise>
+        </choose>
   </select>
 
 </mapper>

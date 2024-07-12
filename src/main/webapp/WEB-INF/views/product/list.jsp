@@ -12,6 +12,25 @@
     <c:import url="/WEB-INF/views/sample/header.jsp"></c:import>
     
     <div class="container-fluid mt-5">
+        <form action="./list" method="get" class="row row-cols-lg-auto g-3 align-items-center">
+            <div class="col-12">
+                <label class="visually-hidden" for="inlineFormSelectPref">Preference</label>
+                <select name="kind" class="form-select" id="inlineFormSelectPref">
+                    <option value="product_type" <c:if test="${kind == 'product_type'}">selected</c:if>>Product Type</option>
+                    <option value="product_detail" <c:if test="${kind == 'product_detail'}">selected</c:if>>Product Detail</option>
+                </select>
+            </div>
+            <div class="col-12">
+                <label class="visually-hidden" for="inlineFormInputGroupUsername">Search</label>
+                <div class="input-group">
+                    <input type="text" name="search" class="form-control" id="inlineFormInputGroupUsername" placeholder="Search" value="${search}">
+                </div>
+            </div>
+            <div class="col-12">
+                <button type="submit" class="btn btn-primary">Search</button>
+            </div>
+        </form>
+    
         <h1>Product List</h1>
         <table class="table table-striped">
             <thead>
@@ -34,7 +53,7 @@
             <nav aria-label="Page navigation">
                 <ul class="pagination">
                     <li class="page-item <c:if test='${currentPage == 1}'>disabled</c:if>">
-                        <a class="page-link" href="${pageContext.request.contextPath}/product/list?page=${currentPage - 1}&pageSize=${pageSize}" aria-label="Previous">
+                        <a class="page-link" href="${pageContext.request.contextPath}/product/list?page=${currentPage - 1}&pageSize=${pageSize}&kind=${kind}&search=${search}" aria-label="Previous">
                             <span aria-hidden="true">&laquo;</span>
                         </a>
                     </li>
@@ -42,11 +61,11 @@
                     <c:set var="endPage" value="${startPage + 4 < totalPages ? startPage + 4 : totalPages}" />
                     <c:forEach var="i" begin="${startPage}" end="${endPage}">
                         <li class="page-item <c:if test='${i == currentPage}'>active</c:if>">
-                            <a class="page-link" href="${pageContext.request.contextPath}/product/list?page=${i}&pageSize=${pageSize}">${i}</a>
+                            <a class="page-link" href="${pageContext.request.contextPath}/product/list?page=${i}&pageSize=${pageSize}&kind=${kind}&search=${search}">${i}</a>
                         </li>
                     </c:forEach>
                     <li class="page-item <c:if test='${currentPage == totalPages}'>disabled</c:if>">
-                        <a class="page-link" href="${pageContext.request.contextPath}/product/list?page=${currentPage + 1}&pageSize=${pageSize}" aria-label="Next">
+                        <a class="page-link" href="${pageContext.request.contextPath}/product/list?page=${currentPage + 1}&pageSize=${pageSize}&kind=${kind}&search=${search}" aria-label="Next">
                             <span aria-hidden="true">&raquo;</span>
                         </a>
                     </li>

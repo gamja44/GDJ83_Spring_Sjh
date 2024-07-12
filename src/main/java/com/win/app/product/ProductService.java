@@ -10,8 +10,8 @@ public class ProductService {
 	@Autowired
 	private ProductDAO productDAO;
 
-	public List<ProductDTO> getList(int startRow, int endRow) throws Exception {
-		return productDAO.getList(startRow, endRow);
+	public List<ProductDTO> getList(int startRow, int endRow, String kind, String search) throws Exception {
+		return productDAO.getList(startRow, endRow, kind, search);
 	}
 
 	public ProductDTO getDetail(ProductDTO product) throws Exception {
@@ -30,7 +30,7 @@ public class ProductService {
 		productDAO.deleteProduct(product);
 	}
 
-	public int getTotalProducts() throws Exception {
-		return productDAO.getTotalProducts(); // 총 제품 수를 가져오는 메서드 호출
+	public int getTotalProducts(String kind, String search) throws Exception {
+		return productDAO.getTotalProducts(kind, search);
 	}
 }

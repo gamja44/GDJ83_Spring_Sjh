@@ -15,10 +15,12 @@ public class ProductDAO {
 
 	private final String NAMESPACE = "com.win.app.product.ProductDAO.";
 
-	public List<ProductDTO> getList(int startRow, int endRow) throws Exception {
+	public List<ProductDTO> getList(int startRow, int endRow, String kind, String search) throws Exception {
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("startRow", startRow);
 		params.put("endRow", endRow);
+		params.put("kind", kind);
+		params.put("search", "%" + search + "%");
 		return sqlSession.selectList(NAMESPACE + "getList", params);
 	}
 
@@ -38,7 +40,10 @@ public class ProductDAO {
 		return sqlSession.delete(NAMESPACE + "deleteProduct", productDTO);
 	}
 
-	public int getTotalProducts() throws Exception {
-		return sqlSession.selectOne(NAMESPACE + "getTotalProducts");
+	public int getTotalProducts(String kind, String search) throws Exception {
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("kind", kind);
+		params.put("search", "%" + search + "%");
+		return sqlSession.selectOne(NAMESPACE + "getTotalProducts", params);
 	}
 }
