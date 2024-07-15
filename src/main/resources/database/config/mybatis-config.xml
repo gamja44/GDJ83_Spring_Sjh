@@ -10,6 +10,7 @@
         <typeAlias type="com.win.app.members.MemberDTO" alias="MemberDTO"/>
         <typeAlias type="com.win.app.accounts.AccountDTO" alias="AccountDTO"/>
         <typeAlias alias="ListOption" type="com.win.app.accounts.ListOption"/>
+        <typeAlias type="com.win.app.boards.notice.NoticeDTO" alias="NoticeDTO"/>
         <typeAlias alias="HistoryDTO" type="com.win.app.history.HistoryDTO"/>
         <typeAlias type="java.util.Map" alias="Map"/>
     </typeAliases>

@@ -1,4 +1,4 @@
-package com.win.app.notice;
+package com.win.app.boards.notice;
 
 import java.util.List;
 
@@ -13,7 +13,7 @@ public class NoticeDAO {
 	@Autowired
 	private SqlSession sqlSession;
 
-	private final String NAMESPACE = "com.win.app.notice.NoticeDAO.";
+	private final String NAMESPACE = "com.win.app.boards.notice.NoticeDAO.";
 
 	public Long getTotalCount(Pager pager) throws Exception {
 		return sqlSession.selectOne(NAMESPACE + "getTotalCount", pager);

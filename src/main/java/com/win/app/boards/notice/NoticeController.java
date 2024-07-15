@@ -1,6 +1,6 @@
-package com.win.app.notice;
+package com.win.app.boards.notice;
 
-import java.util.Map;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.win.app.members.MemberDTO;
+import com.win.app.util.Pager;
 
 @Controller
 @RequestMapping("/notice/*")
@@ -20,9 +21,10 @@ public class NoticeController {
 	private NoticeService noticeService;
 
 	@RequestMapping(value = "list", method = RequestMethod.GET)
-	public void getList(Long page, String kind, String search, Model model) throws Exception {
-		Map<String, Object> map = noticeService.getList(page, kind, search);
-		model.addAttribute("map", map);
+	public void getList(Pager pager, Model model) throws Exception {
+		List<NoticeDTO> list = noticeService.getList(pager);
+		model.addAttribute("list", list);
+		model.addAttribute("pager", pager);
 	}
 
 	@RequestMapping(value = "add", method = RequestMethod.GET)
@@ -38,9 +40,7 @@ public class NoticeController {
 		}
 
 		noticeDTO.setBoardWriter(member.getM_id());
-
 		int result = noticeService.add(noticeDTO);
-
 		return "redirect:/notice/list";
 	}
 

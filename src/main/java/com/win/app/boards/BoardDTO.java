@@ -1,16 +1,16 @@
-package com.win.app.notice;
+package com.win.app.boards;
 
 import java.sql.Date;
 
-public class NoticeDTO {
+public class BoardDTO {
 	private Integer boardNum;
 	private Integer boardWriter;
 	private String boardTitle;
 	private String boardContents;
 	private Date createDate;
 	private Date updateDate;
-	private String boardCategory;
 	private Integer boardHit;
+	private String boardCategory;
 
 	// Getters and Setters
 	public Integer getBoardNum() {
@@ -61,19 +61,19 @@ public class NoticeDTO {
 		this.updateDate = updateDate;
 	}
 
-	public String getBoardCategory() {
-		return boardCategory;
-	}
-
-	public void setBoardCategory(String boardCategory) {
-		this.boardCategory = boardCategory;
-	}
-
 	public Integer getBoardHit() {
 		return boardHit;
 	}
 
 	public void setBoardHit(Integer boardHit) {
 		this.boardHit = boardHit;
+	}
+
+	public String getBoardCategory() {
+		return boardCategory;
+	}
+
+	public void setBoardCategory(String boardCategory) {
+		this.boardCategory = boardCategory;
 	}
 }
