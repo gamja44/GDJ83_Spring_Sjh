@@ -3,8 +3,8 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.win.app.boards.notice.NoticeDAO">
-  <resultMap id="NoticeResultMap" type="com.win.app.boards.notice.NoticeDTO">
+<mapper namespace="com.win.app.boards.qnas.QnaDAO">
+  <resultMap id="QnaResultMap" type="com.win.app.boards.qnas.QnaDTO">
     <id column="BOARD_NUM" property="boardNum"/>
     <result column="BOARD_WRITER" property="boardWriter"/>
     <result column="BOARD_TITLE" property="boardTitle"/>
@@ -13,10 +13,13 @@
     <result column="UPDATE_DATE" property="updateDate"/>
     <result column="BOARD_CATEGORY" property="boardCategory"/>
     <result column="BOARD_HIT" property="boardHit"/>
+    <result column="REF" property="ref"/>
+    <result column="STEP" property="step"/>
+    <result column="DEPTH" property="depth"/>
   </resultMap>
 
   <select id="getTotalCount" resultType="java.lang.Long" parameterType="com.win.app.util.Pager">
-    SELECT COUNT(BOARD_NUM) FROM NOTICE
+    SELECT COUNT(BOARD_NUM) FROM QNA
     <where>
       BOARD_NUM > 0
       <choose>
@@ -33,11 +36,11 @@
     </where>
   </select>
 
-  <select id="getList" resultMap="NoticeResultMap" parameterType="com.win.app.util.Pager">
+  <select id="getList" resultMap="QnaResultMap" parameterType="com.win.app.util.Pager">
     SELECT * FROM (
       SELECT ROWNUM R, B.* FROM (
         SELECT *
-        FROM NOTICE
+        FROM QNA
         <where>
           BOARD_NUM > 0
           <choose>
@@ -58,17 +61,17 @@
     WHERE R BETWEEN #{startRow} AND #{lastRow}
   </select>
 
-  <insert id="add" parameterType="com.win.app.boards.notice.NoticeDTO">
-    INSERT INTO NOTICE (BOARD_NUM, BOARD_TITLE, BOARD_WRITER, CREATE_DATE, UPDATE_DATE, BOARD_HIT, BOARD_CONTENTS, BOARD_CATEGORY)
-    VALUES (Board_SEQ.NEXTVAL, #{boardTitle}, #{boardWriter}, DEFAULT, DEFAULT, DEFAULT, #{boardContents, jdbcType=CLOB}, #{boardCategory, jdbcType=VARCHAR})
+  <insert id="add" parameterType="com.win.app.boards.qnas.QnaDTO">
+    INSERT INTO QNA (BOARD_NUM, BOARD_TITLE, BOARD_WRITER, CREATE_DATE, UPDATE_DATE, BOARD_HIT, BOARD_CONTENTS, BOARD_CATEGORY, REF, STEP, DEPTH)
+    VALUES (Board_SEQ.NEXTVAL, #{boardTitle}, #{boardWriter}, DEFAULT, DEFAULT, DEFAULT, #{boardContents, jdbcType=CLOB}, #{boardCategory, jdbcType=VARCHAR}, #{ref}, #{step}, #{depth})
   </insert>
 
-  <select id="detail" resultMap="NoticeResultMap" parameterType="int">
-    SELECT * FROM NOTICE WHERE BOARD_NUM = #{boardNum}
+  <select id="detail" resultMap="QnaResultMap" parameterType="int">
+    SELECT * FROM QNA WHERE BOARD_NUM = #{boardNum}
   </select>
 
-  <update id="update" parameterType="com.win.app.boards.notice.NoticeDTO">
-    UPDATE NOTICE SET
+  <update id="update" parameterType="com.win.app.boards.qnas.QnaDTO">
+    UPDATE QNA SET
       BOARD_TITLE = #{boardTitle},
       BOARD_CONTENTS = #{boardContents, jdbcType=CLOB},
       UPDATE_DATE = DEFAULT,
@@ -77,10 +80,10 @@
   </update>
 
   <delete id="delete" parameterType="int">
-    DELETE FROM NOTICE WHERE BOARD_NUM = #{boardNum}
+    DELETE FROM QNA WHERE BOARD_NUM = #{boardNum}
   </delete>
   
   <update id="incrementHit" parameterType="int">
-    UPDATE NOTICE SET BOARD_HIT = BOARD_HIT + 1 WHERE BOARD_NUM = #{boardNum}
+    UPDATE QNA SET BOARD_HIT = BOARD_HIT + 1 WHERE BOARD_NUM = #{boardNum}
   </update>
 </mapper>

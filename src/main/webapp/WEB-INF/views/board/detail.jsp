@@ -1,15 +1,14 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Notice Detail</title>
+<title>${boardType} Detail</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
 </head>
 <body>
 <div class="container-fluid mt-5">
-    <h1>Notice Detail</h1>
+    <h1>${boardType} Detail</h1>
     <div class="mb-3">
         <label class="form-label">번호</label>
         <p class="form-control-plaintext">${notice.boardNum}</p>
@@ -39,14 +38,15 @@
         <p class="form-control-plaintext">${notice.boardCategory}</p>
     </div>
     <div>
-        <a href="${pageContext.request.contextPath}/notice/update?boardNum=${notice.boardNum}" class="btn btn-warning">수정</a>
-        <form action="${pageContext.request.contextPath}/notice/delete" method="post" style="display:inline;">
+        <a href="${pageContext.request.contextPath}/board/${boardType}/update?boardNum=${notice.boardNum}" class="btn btn-warning">수정</a>
+        <form action="${pageContext.request.contextPath}/board/${boardType}/delete" method="post" style="display:inline;">
             <input type="hidden" name="boardNum" value="${notice.boardNum}">
             <button type="submit" class="btn btn-danger">삭제</button>
         </form>
-        <a href="${pageContext.request.contextPath}/notice/list" class="btn btn-secondary">목록</a>
+        <a href="${pageContext.request.contextPath}/board/${boardType}/list" class="btn btn-secondary">목록</a>
     </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+

@@ -7,6 +7,7 @@
 
     <!-- Property placeholder for database properties -->
     <context:property-placeholder location="classpath:database/config/database.properties"/>
+    
 
     <!-- DataSource configuration -->
     <bean class="org.springframework.jdbc.datasource.DriverManagerDataSource" id="dataSource">

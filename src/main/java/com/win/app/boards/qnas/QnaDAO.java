@@ -1,4 +1,4 @@
-package com.win.app.boards.notice;
+package com.win.app.boards.qnas;
 
 import java.util.List;
 
@@ -10,11 +10,11 @@ import com.win.app.boards.BoardDAO;
 import com.win.app.util.Pager;
 
 @Repository
-public class NoticeDAO implements BoardDAO<NoticeDTO> {
+public class QnaDAO implements BoardDAO<QnaDTO> {
 	@Autowired
 	private SqlSession sqlSession;
 
-	private final String NAMESPACE = "com.win.app.boards.notice.NoticeDAO.";
+	private final String NAMESPACE = "com.win.app.boards.qnas.QnaDAO.";
 
 	@Override
 	public Long getTotalCount(Pager pager) throws Exception {
@@ -22,23 +22,23 @@ public class NoticeDAO implements BoardDAO<NoticeDTO> {
 	}
 
 	@Override
-	public List<NoticeDTO> getList(Pager pager) throws Exception {
+	public List<QnaDTO> getList(Pager pager) throws Exception {
 		return sqlSession.selectList(NAMESPACE + "getList", pager);
 	}
 
 	@Override
-	public int add(NoticeDTO noticeDTO) throws Exception {
-		return sqlSession.insert(NAMESPACE + "add", noticeDTO);
+	public int add(QnaDTO qnaDTO) throws Exception {
+		return sqlSession.insert(NAMESPACE + "add", qnaDTO);
 	}
 
 	@Override
-	public NoticeDTO detail(int boardNum) throws Exception {
+	public QnaDTO detail(int boardNum) throws Exception {
 		return sqlSession.selectOne(NAMESPACE + "detail", boardNum);
 	}
 
 	@Override
-	public int update(NoticeDTO noticeDTO) throws Exception {
-		return sqlSession.update(NAMESPACE + "update", noticeDTO);
+	public int update(QnaDTO qnaDTO) throws Exception {
+		return sqlSession.update(NAMESPACE + "update", qnaDTO);
 	}
 
 	@Override

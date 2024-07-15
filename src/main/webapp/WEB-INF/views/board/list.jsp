@@ -1,16 +1,15 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Notice List</title>
+<title>Board List</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
 </head>
 <body>
 <div class="container-fluid mt-5">
-    <h1>Notice List</h1>
+    <h1>${boardType} List</h1>
     
     <!-- 검색어 입력 폼 -->
     <form action="./list" method="get" class="row row-cols-lg-auto g-3 align-items-center">
@@ -31,7 +30,7 @@
         <div class="col-12">
             <button type="submit" class="btn btn-primary">Submit</button>
         </div>
-    </form>    
+    </form>
     
     <table class="table table-hover mt-3">
         <thead>
@@ -44,13 +43,13 @@
             </tr>
         </thead>
         <tbody>
-            <c:forEach items="${list}" var="notice">
+            <c:forEach items="${list}" var="board">
                 <tr>
-                    <td>${notice.boardNum}</td>
-                    <td><a href="./detail?boardNum=${notice.boardNum}">${notice.boardTitle}</a></td>
-                    <td>${notice.boardWriter}</td>
-                    <td>${notice.createDate}</td>
-                    <td>${notice.boardHit}</td>
+                    <td>${board.boardNum}</td>
+                    <td><a href="./detail?boardNum=${board.boardNum}">${board.boardTitle}</a></td>
+                    <td>${board.boardWriter}</td>
+                    <td>${board.createDate}</td>
+                    <td>${board.boardHit}</td>
                 </tr>
             </c:forEach>
         </tbody>
@@ -78,7 +77,7 @@
     
     <div class="row">
         <div>
-            <a href="./add" class="btn btn-danger">공지사항 등록</a>
+            <a href="./add" class="btn btn-danger">${boardType} 등록</a>
         </div>
     </div>
 </div>
