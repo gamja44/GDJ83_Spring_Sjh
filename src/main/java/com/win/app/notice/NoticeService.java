@@ -94,4 +94,8 @@ public class NoticeService {
 	public int delete(int boardNum) throws Exception {
 		return noticeDAO.delete(boardNum);
 	}
+
+	public int incrementHit(int boardNum) throws Exception {
+		return noticeDAO.incrementHit(boardNum);
+	}
 }

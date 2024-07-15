@@ -79,5 +79,12 @@
   <delete id="delete" parameterType="int">
     DELETE FROM NOTICE WHERE BOARD_NUM = #{boardNum}
   </delete>
+  
+  <update id="incrementHit" parameterType="int">
+    UPDATE NOTICE SET BOARD_HIT = BOARD_HIT + 1 WHERE BOARD_NUM = #{boardNum}
+  </update>
 </mapper>
+  
+  
+
 

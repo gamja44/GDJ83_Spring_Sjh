@@ -38,4 +38,8 @@ public class NoticeDAO {
 	public int delete(int boardNum) throws Exception {
 		return sqlSession.delete(NAMESPACE + "delete", boardNum);
 	}
+
+	public int incrementHit(int boardNum) throws Exception {
+		return sqlSession.update(NAMESPACE + "incrementHit", boardNum);
+	}
 }

@@ -27,15 +27,14 @@ public class NoticeController {
 
 	@RequestMapping(value = "add", method = RequestMethod.GET)
 	public String add() throws Exception {
-		return "notice/form";
+		return "notice/add";
 	}
 
 	@RequestMapping(value = "add", method = RequestMethod.POST)
 	public String add(NoticeDTO noticeDTO, HttpSession session) throws Exception {
-		// 로그인한 사용자 정보 가져오기
 		MemberDTO member = (MemberDTO) session.getAttribute("member");
 		if (member == null) {
-			return "redirect:/members/login"; // 로그인 페이지로 리다이렉트
+			return "redirect:/members/login";
 		}
 
 		noticeDTO.setBoardWriter(member.getM_id());
@@ -47,15 +46,16 @@ public class NoticeController {
 
 	@RequestMapping(value = "detail", method = RequestMethod.GET)
 	public String detail(int boardNum, Model model) throws Exception {
+		noticeService.incrementHit(boardNum);
 		NoticeDTO noticeDTO = noticeService.detail(boardNum);
-		model.addAttribute("dto", noticeDTO);
+		model.addAttribute("notice", noticeDTO);
 		return "notice/detail";
 	}
 
 	@RequestMapping(value = "update", method = RequestMethod.GET)
 	public String updateForm(int boardNum, Model model) throws Exception {
 		NoticeDTO noticeDTO = noticeService.detail(boardNum);
-		model.addAttribute("dto", noticeDTO);
+		model.addAttribute("notice", noticeDTO);
 		return "notice/update";
 	}
 
