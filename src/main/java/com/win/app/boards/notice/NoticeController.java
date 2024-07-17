@@ -13,7 +13,7 @@ import com.win.app.boards.BoardDTO;
 import com.win.app.util.Pager;
 
 @Controller
-@RequestMapping("/board/notice/*")
+@RequestMapping("/board/notice")
 public class NoticeController {
 
 	@Autowired
@@ -24,7 +24,7 @@ public class NoticeController {
 		return "Notice";
 	}
 
-	@RequestMapping(value = "list", method = RequestMethod.GET)
+	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public String list(Pager pager, Model model) throws Exception {
 		List<BoardDTO> list = noticeService.getList(pager);
 		model.addAttribute("list", list);
@@ -33,7 +33,7 @@ public class NoticeController {
 		return "board/list";
 	}
 
-	@RequestMapping(value = "detail", method = RequestMethod.GET)
+	@RequestMapping(value = "/detail", method = RequestMethod.GET)
 	public String detail(NoticeDTO noticeDTO, Model model) throws Exception {
 		BoardDTO boardDTO = noticeService.detail(noticeDTO.getBoardNum());
 		model.addAttribute("boardDTO", boardDTO);
@@ -41,32 +41,33 @@ public class NoticeController {
 		return "board/detail";
 	}
 
-	@RequestMapping(value = "add", method = RequestMethod.GET)
+	@RequestMapping(value = "/add", method = RequestMethod.GET)
 	public String add() throws Exception {
 		return "board/add";
 	}
 
-	@RequestMapping(value = "add", method = RequestMethod.POST)
+	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public String add(NoticeDTO noticeDTO) throws Exception {
 		int result = noticeService.add(noticeDTO);
-		return "redirect:./list";
+		return "redirect:/board/notice/list";
 	}
 
-	@RequestMapping(value = "update", method = RequestMethod.GET)
+	@RequestMapping(value = "/update", method = RequestMethod.GET)
 	public String updateForm(int boardNum, Model model) throws Exception {
-		BoardDTO boardDTO = noticeService.detail(boardNum);
-		model.addAttribute("boardDTO", boardDTO);
+		NoticeDTO noticeDTO = noticeService.detail(boardNum);
+		model.addAttribute("boardDTO", noticeDTO);
+		model.addAttribute("mode", "update");
 		model.addAttribute("boardType", "notice");
 		return "board/update";
 	}
 
-	@RequestMapping(value = "update", method = RequestMethod.POST)
+	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	public String update(NoticeDTO noticeDTO) throws Exception {
 		int result = noticeService.update(noticeDTO);
 		return "redirect:/board/notice/detail?boardNum=" + noticeDTO.getBoardNum();
 	}
 
-	@RequestMapping(value = "delete", method = RequestMethod.POST)
+	@RequestMapping(value = "/delete", method = RequestMethod.POST)
 	public String delete(int boardNum) throws Exception {
 		int result = noticeService.delete(boardNum);
 		return "redirect:/board/notice/list";

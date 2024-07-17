@@ -60,7 +60,7 @@
 
   <insert id="add" parameterType="com.win.app.boards.notice.NoticeDTO">
     INSERT INTO NOTICE (BOARD_NUM, BOARD_TITLE, BOARD_WRITER, CREATE_DATE, UPDATE_DATE, BOARD_HIT, BOARD_CONTENTS, BOARD_CATEGORY)
-    VALUES (Board_SEQ.NEXTVAL, #{boardTitle}, #{boardWriter}, DEFAULT, DEFAULT, DEFAULT, #{boardContents, jdbcType=CLOB}, #{boardCategory, jdbcType=VARCHAR})
+    VALUES (Board_SEQ.NEXTVAL, #{boardTitle}, #{boardWriter}, SYSDATE, SYSDATE, 0, #{boardContents, jdbcType=CLOB}, #{boardCategory, jdbcType=VARCHAR})
   </insert>
 
   <select id="detail" resultMap="NoticeResultMap" parameterType="int">
@@ -71,7 +71,7 @@
     UPDATE NOTICE SET
       BOARD_TITLE = #{boardTitle},
       BOARD_CONTENTS = #{boardContents, jdbcType=CLOB},
-      UPDATE_DATE = DEFAULT,
+      UPDATE_DATE = SYSDATE,
       BOARD_CATEGORY = #{boardCategory, jdbcType=VARCHAR}
     WHERE BOARD_NUM = #{boardNum}
   </update>

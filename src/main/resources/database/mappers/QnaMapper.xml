@@ -63,7 +63,7 @@
 
   <insert id="add" parameterType="com.win.app.boards.qnas.QnaDTO">
     INSERT INTO QNA (BOARD_NUM, BOARD_TITLE, BOARD_WRITER, CREATE_DATE, UPDATE_DATE, BOARD_HIT, BOARD_CONTENTS, BOARD_CATEGORY, REF, STEP, DEPTH)
-    VALUES (Board_SEQ.NEXTVAL, #{boardTitle}, #{boardWriter}, DEFAULT, DEFAULT, DEFAULT, #{boardContents, jdbcType=CLOB}, #{boardCategory, jdbcType=VARCHAR}, #{ref}, #{step}, #{depth})
+    VALUES (Board_SEQ.NEXTVAL, #{boardTitle}, #{boardWriter}, SYSDATE, SYSDATE, 0, #{boardContents, jdbcType=CLOB}, #{boardCategory, jdbcType=VARCHAR}, #{ref, jdbcType=INTEGER}, #{step, jdbcType=INTEGER}, #{depth, jdbcType=INTEGER})
   </insert>
 
   <select id="detail" resultMap="QnaResultMap" parameterType="int">
@@ -74,7 +74,7 @@
     UPDATE QNA SET
       BOARD_TITLE = #{boardTitle},
       BOARD_CONTENTS = #{boardContents, jdbcType=CLOB},
-      UPDATE_DATE = DEFAULT,
+      UPDATE_DATE = SYSDATE,
       BOARD_CATEGORY = #{boardCategory, jdbcType=VARCHAR}
     WHERE BOARD_NUM = #{boardNum}
   </update>
@@ -97,7 +97,8 @@
   <!-- 답글 삽입 SQL 문 추가 -->
   <insert id="reply" parameterType="com.win.app.boards.qnas.QnaDTO">
     INSERT INTO QNA (BOARD_NUM, BOARD_WRITER, BOARD_TITLE, BOARD_CONTENTS, CREATE_DATE, UPDATE_DATE, BOARD_HIT, BOARD_CATEGORY, REF, STEP, DEPTH)
-    VALUES (Board_SEQ.NEXTVAL, #{boardWriter}, #{boardTitle}, #{boardContents, jdbcType=CLOB}, SYSDATE, SYSDATE, 0, #{boardCategory, jdbcType=VARCHAR}, #{ref}, #{step}, #{depth})
+    VALUES (Board_SEQ.NEXTVAL, #{boardWriter}, #{boardTitle}, #{boardContents, jdbcType=CLOB}, SYSDATE, SYSDATE, 0, #{boardCategory, jdbcType=VARCHAR}, #{ref, jdbcType=INTEGER}, #{step, jdbcType=INTEGER}, #{depth, jdbcType=INTEGER})
   </insert>
 
 </mapper>
+

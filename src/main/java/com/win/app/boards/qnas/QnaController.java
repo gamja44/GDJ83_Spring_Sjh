@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +18,7 @@ import com.win.app.util.Pager;
 @RequestMapping("/board/qna/*")
 public class QnaController {
 
+	@Autowired
 	private QnaService qnaService;
 
 	@GetMapping("list")
@@ -51,7 +53,7 @@ public class QnaController {
 	public String detail(int boardNum, Model model) throws Exception {
 		qnaService.incrementHit(boardNum);
 		QnaDTO qnaDTO = qnaService.detail(boardNum);
-		model.addAttribute("qna", qnaDTO);
+		model.addAttribute("boardDTO", qnaDTO);
 		model.addAttribute("mode", "detail");
 		model.addAttribute("boardType", "qna");
 		return "board/detail";
@@ -60,7 +62,7 @@ public class QnaController {
 	@GetMapping("update")
 	public String updateForm(int boardNum, Model model) throws Exception {
 		QnaDTO qnaDTO = qnaService.detail(boardNum);
-		model.addAttribute("qna", qnaDTO);
+		model.addAttribute("boardDTO", qnaDTO);
 		model.addAttribute("mode", "update");
 		model.addAttribute("boardType", "qna");
 		return "board/update";
@@ -82,7 +84,7 @@ public class QnaController {
 	@GetMapping("reply")
 	public String replyForm(int boardNum, Model model) throws Exception {
 		QnaDTO qnaDTO = qnaService.detail(boardNum);
-		model.addAttribute("qna", qnaDTO);
+		model.addAttribute("boardDTO", qnaDTO);
 		model.addAttribute("mode", "reply");
 		model.addAttribute("boardType", "qna");
 		return "board/reply";
@@ -96,7 +98,13 @@ public class QnaController {
 		}
 
 		qnaDTO.setBoardWriter(member.getM_id());
+
+		// QnaDTO와 BoardNum 필드 확인
+		if (qnaDTO == null || qnaDTO.getBoardNum() == null) {
+			return "redirect:/board/qna/list?error=InvalidQnaDTO";
+		}
+
 		int result = qnaService.reply(qnaDTO);
-		return "redirect:/board/qna/detail?boardNum=" + qnaDTO.getBoardNum();
+		return "redirect:/board/qna/detail?boardNum=" + qnaDTO.getRef();
 	}
 }

@@ -5,7 +5,7 @@
     <!-- 계좌 생성 SQL 매핑 -->
     <insert id="createAccount" parameterType="com.win.app.accounts.AccountDTO">
         INSERT INTO PRODUCT_INFO (PRODUCT_INFO_ID, PRODUCT_ID, M_ID, JOIN_DATE, ACCOUNT_NUMBER, BALANCE)
-        VALUES (PRODUCT_INFO_SEQ.NEXTVAL, #{product_id}, #{m_id}, SYSDATE, #{account_number}, #{balance})
+        VALUES (PRODUCT_INFO_SEQ.NEXTVAL, #{product_id}, #{m_id}, SYSDATE, #{account_number, jdbcType=VARCHAR}, #{balance, jdbcType=DOUBLE})
     </insert>
 
     <!-- 계좌 상세 조회 SQL 매핑 -->
@@ -25,33 +25,33 @@
         INNER JOIN
             PRODUCT p ON pi.PRODUCT_ID = p.PRODUCT_ID
         WHERE
-            pi.ACCOUNT_NUMBER = #{account_number}
+            pi.ACCOUNT_NUMBER = #{account_number, jdbcType=VARCHAR}
     </select>
 
     <!-- 내 계좌 잔고 업데이트 SQL 매핑 -->
     <update id="updateFromAccountBalance" parameterType="com.win.app.accounts.AccountDTO">
         UPDATE PRODUCT_INFO
-        SET BALANCE = #{balance}
+        SET BALANCE = #{balance, jdbcType=DOUBLE}
         WHERE PRODUCT_INFO_ID = #{product_info_id}
     </update>
 
     <!-- 상대방 계좌 잔고 업데이트 SQL 매핑 -->
     <update id="updateToAccountBalance" parameterType="com.win.app.accounts.AccountDTO">
         UPDATE PRODUCT_INFO
-        SET BALANCE = #{balance}
+        SET BALANCE = #{balance, jdbcType=DOUBLE}
         WHERE PRODUCT_INFO_ID = #{product_info_id}
     </update>
 
     <!-- 내 계좌 거래 내역 삽입 SQL 매핑 -->
     <insert id="insertFromAccountHistory" parameterType="com.win.app.history.HistoryDTO">
         INSERT INTO HISTORY (HISTORY_ID, PRODUCT_INFO_ID, HISTORY_TIME, AMOUNT, BALANCE, TYPE)
-        VALUES (HISTORY_SEQ.NEXTVAL, #{product_info_id}, SYSDATE, #{amount}, #{balance}, #{type})
+        VALUES (HISTORY_SEQ.NEXTVAL, #{product_info_id}, SYSDATE, #{amount, jdbcType=DOUBLE}, #{balance, jdbcType=DOUBLE}, #{type})
     </insert>
 
     <!-- 상대방 계좌 거래 내역 삽입 SQL 매핑 -->
     <insert id="insertToAccountHistory" parameterType="com.win.app.history.HistoryDTO">
         INSERT INTO HISTORY (HISTORY_ID, PRODUCT_INFO_ID, HISTORY_TIME, AMOUNT, BALANCE, TYPE)
-        VALUES (HISTORY_SEQ.NEXTVAL, #{product_info_id}, SYSDATE, #{amount}, #{balance}, #{type})
+        VALUES (HISTORY_SEQ.NEXTVAL, #{product_info_id}, SYSDATE, #{amount, jdbcType=DOUBLE}, #{balance, jdbcType=DOUBLE}, #{type})
     </insert>
 
     <!-- 거래 내역 조회 -->
@@ -64,7 +64,7 @@
             BALANCE,
             TYPE
         FROM HISTORY
-        WHERE PRODUCT_INFO_ID = (SELECT PRODUCT_INFO_ID FROM PRODUCT_INFO WHERE ACCOUNT_NUMBER = #{accountNumber})
+        WHERE PRODUCT_INFO_ID = (SELECT PRODUCT_INFO_ID FROM PRODUCT_INFO WHERE ACCOUNT_NUMBER = #{accountNumber, jdbcType=VARCHAR})
         ORDER BY HISTORY_TIME <if test="order == 1">ASC</if><if test="order == 0">DESC</if>
     </select>
 

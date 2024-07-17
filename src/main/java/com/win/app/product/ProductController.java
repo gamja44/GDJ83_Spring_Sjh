@@ -72,7 +72,7 @@ public class ProductController {
 		return "redirect:/product/list";
 	}
 
-	@RequestMapping("/delete")
+	@RequestMapping(value = "/delete", method = RequestMethod.POST)
 	public String deleteProduct(@RequestParam("product_id") int productId) throws Exception {
 		ProductDTO productDTO = new ProductDTO();
 		productDTO.setProduct_id(productId);

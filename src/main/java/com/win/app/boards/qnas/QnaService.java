@@ -48,15 +48,26 @@ public class QnaService {
 		return qnaDAO.incrementHit(boardNum);
 	}
 
-	// 답글 기능 추가
 	public int reply(QnaDTO qnaDTO) throws Exception {
-		QnaDTO parent = qnaDAO.detail(qnaDTO.getRef());
-		qnaDTO.setRef(parent.getRef());
-		qnaDTO.setStep(parent.getStep() + 1);
-		qnaDTO.setDepth(parent.getDepth() + 1);
+		// 필요한 필드 체크
+		if (qnaDTO == null || qnaDTO.getBoardNum() == null) {
+			throw new NullPointerException("QnaDTO or BoardNum is null");
+		}
 
-		qnaDAO.updateStep(parent);
+		// 부모 글 정보 가져오기
+		QnaDTO parentDTO = qnaDAO.detail(qnaDTO.getBoardNum());
+		if (parentDTO == null) {
+			throw new NullPointerException("Parent QnaDTO is null");
+		}
 
-		return qnaDAO.reply(qnaDTO);
+		// 답글 처리 로직
+		qnaDTO.setRef(parentDTO.getRef());
+		qnaDTO.setStep(parentDTO.getStep() + 1);
+		qnaDTO.setDepth(parentDTO.getDepth() + 1);
+
+		qnaDAO.updateStep(qnaDTO);
+		int result = qnaDAO.reply(qnaDTO);
+
+		return result;
 	}
 }
