@@ -86,4 +86,18 @@
   <update id="incrementHit" parameterType="int">
     UPDATE QNA SET BOARD_HIT = BOARD_HIT + 1 WHERE BOARD_NUM = #{boardNum}
   </update>
+
+  <!-- Step 업데이트 SQL 문 추가 -->
+  <update id="updateStep" parameterType="com.win.app.boards.qnas.QnaDTO">
+    UPDATE QNA
+    SET STEP = STEP + 1
+    WHERE REF = #{ref} AND STEP > #{step}
+  </update>
+
+  <!-- 답글 삽입 SQL 문 추가 -->
+  <insert id="reply" parameterType="com.win.app.boards.qnas.QnaDTO">
+    INSERT INTO QNA (BOARD_NUM, BOARD_WRITER, BOARD_TITLE, BOARD_CONTENTS, CREATE_DATE, UPDATE_DATE, BOARD_HIT, BOARD_CATEGORY, REF, STEP, DEPTH)
+    VALUES (Board_SEQ.NEXTVAL, #{boardWriter}, #{boardTitle}, #{boardContents, jdbcType=CLOB}, SYSDATE, SYSDATE, 0, #{boardCategory, jdbcType=VARCHAR}, #{ref}, #{step}, #{depth})
+  </insert>
+
 </mapper>

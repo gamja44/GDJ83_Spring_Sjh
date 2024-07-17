@@ -50,4 +50,14 @@ public class QnaDAO implements BoardDAO<QnaDTO> {
 	public int incrementHit(int boardNum) throws Exception {
 		return sqlSession.update(NAMESPACE + "incrementHit", boardNum);
 	}
+
+	// 답글 추가
+	public int reply(QnaDTO qnaDTO) throws Exception {
+		return sqlSession.insert(NAMESPACE + "reply", qnaDTO);
+	}
+
+	// Step 업데이트 메서드 추가
+	public int updateStep(QnaDTO parent) throws Exception {
+		return sqlSession.update(NAMESPACE + "updateStep", parent);
+	}
 }

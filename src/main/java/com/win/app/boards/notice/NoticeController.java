@@ -7,8 +7,9 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.win.app.members.MemberDTO;
 import com.win.app.util.Pager;
@@ -20,7 +21,7 @@ public class NoticeController {
 	@Autowired
 	private NoticeService noticeService;
 
-	@RequestMapping(value = "list", method = RequestMethod.GET)
+	@GetMapping("list")
 	public String getList(Pager pager, Model model) throws Exception {
 		List<NoticeDTO> list = noticeService.getList(pager);
 		model.addAttribute("list", list);
@@ -29,14 +30,14 @@ public class NoticeController {
 		return "board/list";
 	}
 
-	@RequestMapping(value = "add", method = RequestMethod.GET)
+	@GetMapping("add")
 	public String addForm(Model model) throws Exception {
 		model.addAttribute("mode", "add");
 		model.addAttribute("boardType", "notice");
 		return "board/add";
 	}
 
-	@RequestMapping(value = "add", method = RequestMethod.POST)
+	@PostMapping("add")
 	public String add(NoticeDTO noticeDTO, HttpSession session) throws Exception {
 		MemberDTO member = (MemberDTO) session.getAttribute("member");
 		if (member == null) {
@@ -48,7 +49,7 @@ public class NoticeController {
 		return "redirect:/board/notice/list";
 	}
 
-	@RequestMapping(value = "detail", method = RequestMethod.GET)
+	@GetMapping("detail")
 	public String detail(int boardNum, Model model) throws Exception {
 		noticeService.incrementHit(boardNum);
 		NoticeDTO noticeDTO = noticeService.detail(boardNum);
@@ -58,7 +59,7 @@ public class NoticeController {
 		return "board/detail";
 	}
 
-	@RequestMapping(value = "update", method = RequestMethod.GET)
+	@GetMapping("update")
 	public String updateForm(int boardNum, Model model) throws Exception {
 		NoticeDTO noticeDTO = noticeService.detail(boardNum);
 		model.addAttribute("notice", noticeDTO);
@@ -67,13 +68,13 @@ public class NoticeController {
 		return "board/update";
 	}
 
-	@RequestMapping(value = "update", method = RequestMethod.POST)
+	@PostMapping("update")
 	public String update(NoticeDTO noticeDTO) throws Exception {
 		int result = noticeService.update(noticeDTO);
 		return "redirect:/board/notice/detail?boardNum=" + noticeDTO.getBoardNum();
 	}
 
-	@RequestMapping(value = "delete", method = RequestMethod.POST)
+	@PostMapping("delete")
 	public String delete(int boardNum) throws Exception {
 		int result = noticeService.delete(boardNum);
 		return "redirect:/board/notice/list";

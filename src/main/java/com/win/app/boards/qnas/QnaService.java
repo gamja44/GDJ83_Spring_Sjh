@@ -47,4 +47,16 @@ public class QnaService {
 	public int incrementHit(int boardNum) throws Exception {
 		return qnaDAO.incrementHit(boardNum);
 	}
+
+	// 답글 기능 추가
+	public int reply(QnaDTO qnaDTO) throws Exception {
+		QnaDTO parent = qnaDAO.detail(qnaDTO.getRef());
+		qnaDTO.setRef(parent.getRef());
+		qnaDTO.setStep(parent.getStep() + 1);
+		qnaDTO.setDepth(parent.getDepth() + 1);
+
+		qnaDAO.updateStep(parent);
+
+		return qnaDAO.reply(qnaDTO);
+	}
 }

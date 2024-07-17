@@ -79,4 +79,26 @@ public class QnaController {
 		int result = qnaService.delete(boardNum);
 		return "redirect:/board/qna/list";
 	}
+
+	// 답글 추가
+	@GetMapping("reply")
+	public String replyForm(int boardNum, Model model) throws Exception {
+		QnaDTO qnaDTO = qnaService.detail(boardNum);
+		model.addAttribute("qna", qnaDTO);
+		model.addAttribute("mode", "reply");
+		model.addAttribute("boardType", "qna");
+		return "board/reply";
+	}
+
+	@PostMapping("reply")
+	public String reply(QnaDTO qnaDTO, HttpSession session) throws Exception {
+		MemberDTO member = (MemberDTO) session.getAttribute("member");
+		if (member == null) {
+			return "redirect:/members/login";
+		}
+
+		qnaDTO.setBoardWriter(member.getM_id());
+		int result = qnaService.reply(qnaDTO);
+		return "redirect:/board/qna/detail?boardNum=" + qnaDTO.getBoardNum();
+	}
 }
