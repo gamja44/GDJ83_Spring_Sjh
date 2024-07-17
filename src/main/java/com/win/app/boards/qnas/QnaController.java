@@ -17,6 +17,7 @@ import com.win.app.util.Pager;
 @Controller
 @RequestMapping("/board/qna/*")
 public class QnaController {
+	private String conflict;
 
 	@Autowired
 	private QnaService qnaService;
