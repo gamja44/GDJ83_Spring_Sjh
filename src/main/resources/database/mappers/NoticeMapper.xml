@@ -84,3 +84,4 @@
     UPDATE NOTICE SET BOARD_HIT = BOARD_HIT + 1 WHERE BOARD_NUM = #{boardNum}
   </update>
 </mapper>
+
