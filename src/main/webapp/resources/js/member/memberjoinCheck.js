@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 // 값이 비어있으면 오류 메시지 표시
                 const errorElement = document.getElementById(fields[i] + 'Error');
                 if (errorElement) {
-                    errorElement.textContent = 'This field is required';
+                    errorElement.textContent = '여기에 필수로 입력하세요';
                 }
                 isValid = false;
             }
