@@ -15,7 +15,7 @@
 	<div class="container-fluid mt-5">
 		<div class="row justify-content-center">
 			<div class="col-md-6">
-				<form method="post" id="frm">
+				<form method="post" id="frm" enctype="multipart/form-data">
 					<div class="mb-3">
     	                <label for="userName" class="form-label">ID</label>
                         <input type="text" class="form-control" id="userName" name="member_id">
@@ -52,6 +52,12 @@
                         <div id="addressError" class="text-danger"></div>
                     </div>
                     <div class="mb-3">
+                        <label for="photo" class="form-label"></label>
+                        <input type="file" class="form-control" id="photo" name="photo" style="display:none;">
+                        <button type="button" id="add" class="btn btn-secondary">사진추가</button>
+                        <div id="photoError" class="text-danger"></div>
+                    </div>
+                    <div class="mb-3">
 						<button type="button" id="btn" class="btn btn-primary">회원가입</button>
 					</div>
 				</form>	
@@ -64,3 +70,4 @@
 	</div>
 </body>
 </html>
+

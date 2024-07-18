@@ -1,9 +1,11 @@
 document.addEventListener("DOMContentLoaded", function() {
     const btn = document.getElementById("btn");
     const frm = document.getElementById("frm");
+    const addPhotoBtn = document.getElementById("add");
+    const photoInput = document.getElementById("photo");
 
     btn.addEventListener("click", function() {
-        let fields = ['userName', 'password', 'name', 'memberNumber', 'phone', 'email', 'address'];
+        let fields = ['userName', 'password', 'name', 'memberNumber', 'phone', 'email', 'address', 'photo'];
         let isValid = true;
 
         // 모든 오류 메시지 초기화
@@ -36,4 +38,9 @@ document.addEventListener("DOMContentLoaded", function() {
             alert("fail");
         }
     });
+
+    addPhotoBtn.addEventListener("click", function() {
+        photoInput.click();
+    });
 });
+
