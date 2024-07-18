@@ -1,13 +1,19 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+ <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>   
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <title>Transfer</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<c:import url="/WEB-INF/views/template/header_css.jsp"></c:import>
 </head>
-<body>
-    <div class="container mt-5">
+<body class="d-flex flex-column h-100">
+	<div>
+		<c:import url="/WEB-INF/views/template/header_bar.jsp"></c:import>
+		
+	</div>
+	  <div class="container mt-5">
         <h1>Transfer</h1>
         <form action="/account/transfer" method="post">
             <input type="hidden" name="fromAccount" value="${param.fromAccount}">
@@ -25,5 +31,8 @@
             <div class="alert alert-danger mt-3">${error}</div>
         </c:if>
     </div>
+	<div>
+		<c:import url="/WEB-INF/views/template/footer.jsp"></c:import>
+	</div>
 </body>
 </html>
