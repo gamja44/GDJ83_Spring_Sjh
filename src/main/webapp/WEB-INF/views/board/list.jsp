@@ -1,15 +1,20 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+ <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>   
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>${boardType} List</title>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+<title>Insert title here</title>
+<c:import url="/WEB-INF/views/template/header_css.jsp"></c:import>
 </head>
-<body>
-<div class="container-fluid mt-5">
-    <h1>${boardType} List</h1>
+<body class="d-flex flex-column h-100">
+	<div>
+		<c:import url="/WEB-INF/views/template/header_bar.jsp"></c:import>
+		
+	</div>
+	<div class="container-fluid mt-5">
+    <h1><span class="fw-bolder text-primary">${boardType} List</span></h1>
     
     <!-- 검색어 입력 폼 -->
     <form action="./list" method="get" class="row row-cols-lg-auto g-3 align-items-center">
@@ -81,9 +86,10 @@
         </div>
     </div>
 </div>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+	
+	
+	<div>
+		<c:import url="/WEB-INF/views/template/footer.jsp"></c:import>
+	</div>
 </body>
 </html>
-
-
