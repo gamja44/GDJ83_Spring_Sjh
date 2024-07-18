@@ -18,7 +18,8 @@ public class MemberController {
 	private MemberService memberService;
 
 	@RequestMapping(value = "join", method = RequestMethod.GET)
-	public void join() throws Exception {
+	public String join() throws Exception {
+		return "members/join"; // view 파일 경로에 맞게 수정
 	}
 
 	@RequestMapping(value = "join", method = RequestMethod.POST)

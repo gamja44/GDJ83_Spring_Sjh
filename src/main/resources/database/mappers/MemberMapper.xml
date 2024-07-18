@@ -7,10 +7,15 @@
 
     <insert id="join" parameterType="com.win.app.members.MemberDTO">
         INSERT INTO MEMBERS (M_ID, MEMBER_NAME, MEMBER_NUMBER, PHONE, EMAIL, MEMBER_ID, MEMBER_PWD)
-        VALUES (MEMBERS_SEQ.NEXTVAL, #{member_name}, #{member_number}, #{phone}, #{email}, #{member_id}, #{member_pwd})
+        VALUES (MEMBERS_SEQ.NEXTVAL, 
+                #{member_name, jdbcType=VARCHAR}, 
+                #{member_number, jdbcType=VARCHAR}, 
+                #{phone, jdbcType=VARCHAR}, 
+                #{email, jdbcType=VARCHAR}, 
+                #{member_id, jdbcType=VARCHAR}, 
+                #{member_pwd, jdbcType=VARCHAR})
     </insert>
     
-  
     <select id="login" parameterType="com.win.app.members.MemberDTO" resultType="com.win.app.members.MemberDTO">
         SELECT 
             m.M_ID,
@@ -18,7 +23,7 @@
             m.MEMBER_PWD,
             m.MEMBER_NAME
         FROM MEMBERS m
-        WHERE m.MEMBER_ID = #{member_id}
+        WHERE m.MEMBER_ID = #{member_id, jdbcType=VARCHAR}
     </select>
     
     <select id="getMemberWithAccounts" parameterType="int" resultMap="memberWithAccountsResult">
@@ -37,28 +42,28 @@
             pi.BALANCE
         FROM MEMBERS m
         LEFT JOIN PRODUCT_INFO pi ON m.M_ID = pi.M_ID
-        WHERE m.M_ID = #{m_id}
+        WHERE m.M_ID = #{m_id, jdbcType=INTEGER}
     </select>
     
     <resultMap id="memberWithAccountsResult" type="com.win.app.members.MemberDTO">
-        <id column="M_ID" property="m_id"/>
-        <result column="MEMBER_NAME" property="member_name"/>
-        <result column="MEMBER_NUMBER" property="member_number"/>
-        <result column="PHONE" property="phone"/>
-        <result column="EMAIL" property="email"/>
-        <result column="MEMBER_ID" property="member_id"/>
-        <result column="MEMBER_PWD" property="member_pwd"/>
+        <id column="M_ID" property="m_id" jdbcType="INTEGER"/>
+        <result column="MEMBER_NAME" property="member_name" jdbcType="VARCHAR"/>
+        <result column="MEMBER_NUMBER" property="member_number" jdbcType="VARCHAR"/>
+        <result column="PHONE" property="phone" jdbcType="VARCHAR"/>
+        <result column="EMAIL" property="email" jdbcType="VARCHAR"/>
+        <result column="MEMBER_ID" property="member_id" jdbcType="VARCHAR"/>
+        <result column="MEMBER_PWD" property="member_pwd" jdbcType="VARCHAR"/>
         <collection property="dtos" ofType="com.win.app.accounts.AccountDTO">
-            <id column="PRODUCT_INFO_ID" property="product_info_id"/>
-            <result column="PRODUCT_ID" property="product_id"/>
-            <result column="JOIN_DATE" property="join_date"/>
-            <result column="ACCOUNT_NUMBER" property="account_number"/>
-            <result column="BALANCE" property="balance"/>
+            <id column="PRODUCT_INFO_ID" property="product_info_id" jdbcType="INTEGER"/>
+            <result column="PRODUCT_ID" property="product_id" jdbcType="VARCHAR"/>
+            <result column="JOIN_DATE" property="join_date" jdbcType="TIMESTAMP"/>
+            <result column="ACCOUNT_NUMBER" property="account_number" jdbcType="VARCHAR"/>
+            <result column="BALANCE" property="balance" jdbcType="DECIMAL"/>
         </collection>
     </resultMap>
 
     <select id="getMemberById" parameterType="int" resultType="com.win.app.members.MemberDTO">
-        SELECT * FROM MEMBERS WHERE M_ID = #{m_id}
+        SELECT * FROM MEMBERS WHERE M_ID = #{m_id, jdbcType=INTEGER}
     </select>
     
     <update id="updateMember" parameterType="com.win.app.members.MemberDTO">
@@ -71,7 +76,7 @@
     </update>
     
     <delete id="deleteMember" parameterType="int">
-        DELETE FROM MEMBERS WHERE M_ID = #{m_id}       
+        DELETE FROM MEMBERS WHERE M_ID = #{m_id, jdbcType=INTEGER}       
     </delete>
     
     <select id="detail" parameterType="int" resultType="com.win.app.members.MemberDTO">
@@ -90,6 +95,6 @@
             pi.BALANCE
         FROM MEMBERS m
         LEFT JOIN PRODUCT_INFO pi ON m.M_ID = pi.M_ID
-        WHERE m.M_ID = #{m_id}
+        WHERE m.M_ID = #{m_id, jdbcType=INTEGER}
     </select>
 </mapper>
